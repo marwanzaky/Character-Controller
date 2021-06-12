@@ -20,6 +20,7 @@ namespace Packtool
         bool isGrounded = false;
 
         public bool Landing { get; set; }
+        public bool Run => Input.GetKey(keyCodeRun);
 
         public PlayerAnimator playerAnimator;
         public Rigidbody _rigidbody;
@@ -34,6 +35,7 @@ namespace Packtool
         public Collider _collider;
 
         [Space] public KeyCode keyCodeJump = KeyCode.Space;
+        public KeyCode keyCodeRun = KeyCode.LeftShift;
 
         void Start()
         {
@@ -66,8 +68,9 @@ namespace Packtool
 
         void Movement(bool move)
         {
-            var moveX = move ? Input.GetAxis("Horizontal") : 0f;
-            var moveZ = move ? Input.GetAxis("Vertical") : 0f;
+            var strength = Run ? 2.0f : 1.0f;
+            var moveX = move ? Input.GetAxis("Horizontal") * strength : 0f;
+            var moveZ = move ? Input.GetAxis("Vertical") * strength : 0f;
 
             var movement = new Vector3(moveX, 0f, moveZ);
             transform.Translate(movement * Time.deltaTime * speed);
