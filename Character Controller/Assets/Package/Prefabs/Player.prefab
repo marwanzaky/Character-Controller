@@ -58,6 +58,7 @@ MonoBehaviour:
     m_Bits: 64
   _collider: {fileID: 4533867396449023071}
   keyCodeJump: 32
+  keyCodeRun: 304
 --- !u!114 &4043152122879103935
 MonoBehaviour:
   m_ObjectHideFlags: 0
