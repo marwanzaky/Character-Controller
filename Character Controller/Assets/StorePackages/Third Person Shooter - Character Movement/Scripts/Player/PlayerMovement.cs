@@ -1,0 +1,175 @@
+using UnityEngine;
+
+namespace Packtool
+{
+    public enum Move { Moveable, NotMoveable }
+
+    public class PlayerMovement : Character
+    {
+        #region Singletone
+
+        public static PlayerMovement Instance { get; private set; }
+
+        void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+            else Destroy(this.gameObject);
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public bool Moveable { get; set; } = true;
+
+        public bool IsMoving
+        {
+            get => Mathf.Abs(controller.velocity.x) + Mathf.Abs(controller.velocity.z) > Mathf.Epsilon;
+        }
+
+        public float Speed
+        {
+            get => Input.GetKey(runKeyCode) ? runSpeed : walkSpeed;
+        }
+
+        #endregion
+
+        Vector3 velocity = Vector3.zero;
+        float movementSoundFXLength = 0f;
+
+        [Header("References")]
+        public CharacterController controller;
+        public Animator animator;
+        public Transform _camera;
+
+        [Header("Movement Settings")]
+        public float walkSpeed = 5f;
+        public float runSpeed = 10f;
+        public float gravity = -9.81f;
+        public float jumpHeight = 8f;
+        public Move air = Move.Moveable;
+        public Move land = Move.NotMoveable;
+        public float groundCheckDistance = .01f;
+
+        public KeyCode jumpKeyCode = KeyCode.Space;
+        public KeyCode runKeyCode = KeyCode.LeftShift;
+
+        [Header("Sound FXs")]
+        public AudioClipsData walkClipsData;
+        public AudioClipsData runClipsData;
+        public AudioClipsData landClipsData;
+        public AudioClipsData jumpClipsData;
+
+        [Header("Animator Settings")]
+        [Range(.1f, 5f)] public float animatorMovementSpeed = 1f;
+        public AnimatorOverrideController animatorOverrideControllerWalk;
+        public AnimatorOverrideController animatorOverrideControllerRun;
+
+        void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            animator.SetFloat("MovementSpeed", animatorMovementSpeed);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            Gravity();
+
+            if (air == Move.Moveable || IsGrounded)
+                Movement();
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (IsMoving)
+                LookAtCamera();
+        }
+
+        void Gravity()
+        {
+            const float GROUNDED_VELOCITY = -2f;
+
+            animator.SetBool("Float", !IsGrounded);
+
+            if (!IsGrounded)
+                velocity.y += gravity * Time.deltaTime;
+            else
+                velocity.y = GROUNDED_VELOCITY;
+
+            if (Input.GetButtonDown("Jump") && IsGrounded)
+            {
+                if (jumpClipsData)
+                    SoundFX(jumpClipsData);
+
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+
+            if (IsGrounded && !WasGrounded)
+            {
+                if (landClipsData)
+                    SoundFX(landClipsData);
+            }
+
+            controller.Move(velocity * Time.deltaTime);
+        }
+
+        void Movement()
+        {
+            if (Moveable)
+            {
+                var x = Input.GetAxis("Horizontal");
+                var y = Input.GetAxis("Vertical");
+
+                var movement = transform.right * x + transform.forward * y;
+                controller.Move(movement * Speed * Time.deltaTime);
+
+                animator.runtimeAnimatorController = Speed == walkSpeed ? animatorOverrideControllerWalk : animatorOverrideControllerRun;
+
+                if (Mathf.Abs(x) + Mathf.Abs(y) != 0f && IsGrounded)
+                {
+                    if (movementSoundFXLength <= 0f)
+                    {
+                        var (clip, length) = SoundFX(Speed == walkSpeed ? walkClipsData : runClipsData);
+                        movementSoundFXLength = length;
+                    }
+                    else
+                    {
+                        movementSoundFXLength -= Time.deltaTime;
+                    }
+                }
+
+                animator.SetFloat("Movement", y);
+                animator.SetFloat("Direction", x);
+            }
+        }
+
+        void LookAtCamera()
+        {
+            const float SMOOTH_TIME = 5f;
+            var camAngles = Vector3X.IgnoreXZ(_camera.eulerAngles);
+            var targetRot = Quaternion.Euler(camAngles);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime);
+        }
+
+        (AudioClip audioClip, float length) SoundFX(AudioClipsData data)
+        {
+            var go = new GameObject("Sound fx");
+            var audioSource = go.AddComponent<AudioSource>();
+            var (clip, length) = data.RandomClip();
+
+            audioSource.clip = clip;
+            audioSource.volume = data.volume;
+            audioSource.pitch = data.pitch;
+            audioSource.Play();
+
+            Destroy(go, length);
+
+            return (clip, length);
+        }
+    }
+}
