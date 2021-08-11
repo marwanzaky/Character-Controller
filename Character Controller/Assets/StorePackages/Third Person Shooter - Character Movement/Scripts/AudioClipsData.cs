@@ -14,7 +14,6 @@ namespace Packtool
         public (AudioClip audioClip, float length) RandomClip()
         {
             var res = clips[Random.Range(0, clips.Length - 1)];
-
             return (res, res.length / pitch);
         }
     }

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 606685320}
   - component: {fileID: 606685319}
   - component: {fileID: 606685318}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,5 +658,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7087439507915714219, guid: 1a08441790a6046d58c8149aab7b3111, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: d2b9fb3c150a944d0973d2439de91a1c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a08441790a6046d58c8149aab7b3111, type: 3}

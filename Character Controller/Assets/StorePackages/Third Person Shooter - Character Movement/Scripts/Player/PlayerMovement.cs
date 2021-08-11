@@ -63,13 +63,13 @@ namespace Packtool
 
         [Header("Animator Settings")]
         [Range(.1f, 5f)] public float animatorMovementSpeed = 1f;
-        public AnimatorOverrideController animatorOverrideControllerWalk;
-        public AnimatorOverrideController animatorOverrideControllerRun;
 
         void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
-            animator.SetFloat("MovementSpeed", animatorMovementSpeed);
+
+            if (animator)
+                animator.SetFloat("MovementSpeed", animatorMovementSpeed);
         }
 
         public override void Update()
@@ -94,7 +94,8 @@ namespace Packtool
         {
             const float GROUNDED_VELOCITY = -2f;
 
-            animator.SetBool("Float", !IsGrounded);
+            if (animator)
+                animator.SetBool("Float", !IsGrounded);
 
             if (!IsGrounded)
                 velocity.y += gravity * Time.deltaTime;
@@ -103,7 +104,7 @@ namespace Packtool
 
             if (Input.GetButtonDown("Jump") && IsGrounded)
             {
-                if (jumpClipsData)
+                if (jumpClipsData.clips.Length > 0)
                     SoundFX(jumpClipsData);
 
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -111,7 +112,7 @@ namespace Packtool
 
             if (IsGrounded && !WasGrounded)
             {
-                if (landClipsData)
+                if (landClipsData.clips.Length > 0)
                     SoundFX(landClipsData);
             }
 
@@ -128,11 +129,9 @@ namespace Packtool
                 var movement = transform.right * x + transform.forward * y;
                 controller.Move(movement * Speed * Time.deltaTime);
 
-                animator.runtimeAnimatorController = Speed == walkSpeed ? animatorOverrideControllerWalk : animatorOverrideControllerRun;
-
                 if (Mathf.Abs(x) + Mathf.Abs(y) != 0f && IsGrounded)
                 {
-                    if (movementSoundFXLength <= 0f)
+                    if (movementSoundFXLength <= 0f && walkClipsData.clips.Length > 0 && runClipsData.clips.Length > 0)
                     {
                         var (clip, length) = SoundFX(Speed == walkSpeed ? walkClipsData : runClipsData);
                         movementSoundFXLength = length;
@@ -143,8 +142,12 @@ namespace Packtool
                     }
                 }
 
-                animator.SetFloat("Movement", y);
-                animator.SetFloat("Direction", x);
+                if (animator)
+                {
+                    var strength = (Speed == walkSpeed ? 1f : 2f);
+                    animator.SetFloat("Movement", y * strength);
+                    animator.SetFloat("Direction", x * strength);
+                }
             }
         }
 

@@ -82,20 +82,22 @@ MonoBehaviour:
   groundCheck: 1
   groundMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1
   characterCollider: {fileID: 774535907715392750}
   controller: {fileID: 774535907715392750}
   animator: {fileID: 0}
   _camera: {fileID: 0}
   walkSpeed: 5
   runSpeed: 10
-  gravity: -9.81
+  gravity: -19.62
   jumpHeight: 8
   air: 1
   land: 1
   groundCheckDistance: 0.02
   jumpKeyCode: 32
   runKeyCode: 304
+  walkClipsData: {fileID: 11400000, guid: a117366b0b0254c36875e54c1c8bf963, type: 2}
+  runClipsData: {fileID: 11400000, guid: ac127c060d05f42f3a8bdfcc7812a0e1, type: 2}
   landClipsData: {fileID: 11400000, guid: 6b17098453334400b8a6801827829972, type: 2}
   jumpClipsData: {fileID: 11400000, guid: 9732af105ba3c4932a880dbaeab4f11d, type: 2}
   animatorMovementSpeed: 1
