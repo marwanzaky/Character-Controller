@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 2758195616047679345, guid: 4fcf50c00f8e44572a186a63c4c3effe, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: a672ca8a19e6f4e868cf84b87d13bc09, type: 2}
+      objectReference: {fileID: 22100000, guid: d2b9fb3c150a944d0973d2439de91a1c, type: 2}
     - target: {fileID: 8117519079363976459, guid: 4fcf50c00f8e44572a186a63c4c3effe, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -78,8 +78,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7087439507915714219}
     - target: {fileID: 4043152122879103905, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
-      propertyPath: jumpHeight
-      value: 3
+      propertyPath: runClipsData
+      value: 
+      objectReference: {fileID: 11400000, guid: f43adf813fcea429fa6a5e0d23824fc2, type: 2}
+    - target: {fileID: 4043152122879103905, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
+      propertyPath: jumpClipsData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9db77258eeb0e4fad80b36195cff3b80, type: 2}
+    - target: {fileID: 4043152122879103905, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
+      propertyPath: landClipsData
+      value: 
+      objectReference: {fileID: 11400000, guid: 3f5bca39703a64b2aae42c666c12e08d, type: 2}
+    - target: {fileID: 4043152122879103905, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
+      propertyPath: walkClipsData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a90d6bdff75542ea85d37fd3e31735f, type: 2}
+    - target: {fileID: 4043152122879103905, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 4043152122879103905, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
       propertyPath: groundCheckDistance
@@ -92,7 +108,7 @@ PrefabInstance:
     - target: {fileID: 4043152122879103905, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
       propertyPath: animatorOverrideControllerWalk
       value: 
-      objectReference: {fileID: 22100000, guid: a672ca8a19e6f4e868cf84b87d13bc09, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 4043152122879103907, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -103,7 +119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4043152122879103907, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4043152122879103907, guid: 0bd60b011e40146d0bd6581be4e421fc, type: 3}
       propertyPath: m_LocalPosition.z

@@ -6,23 +6,23 @@ namespace Packtool
 {
     public class Character : MonoBehaviour
     {
-        public enum GroundCheck { Sphere, Ray }
+        public enum GroundCheck { Ray, Sphere, Cube }
 
         #region Protected Properites
 
-        protected bool IsGrounded { get; set; } = false;
+        protected bool IsGrounded { get; private set; } = false;
         protected bool WasGrounded { get; set; } = false;
 
         #endregion
 
         #region Private Properties
 
-        Vector3 GroundCheckPosition
+        Vector3 FeetsCenterPos
         {
             get => Vector3X.IgnoreY(characterCollider.bounds.center, characterCollider.bounds.min.y);
         }
 
-        float ColliderRedius
+        float GroundRadius
         {
             get => characterCollider.bounds.size.x / 2f;
         }
@@ -31,14 +31,21 @@ namespace Packtool
 
         [Header("Character Settings")]
         public bool debug = false;
-        public float groundDistanceCheck = .02f;
+        public float groundDistance = .02f;
         public GroundCheck groundCheck;
         public LayerMask groundMask;
         public Collider characterCollider;
 
         public virtual void Update()
         {
-            IsGrounded = groundCheck == GroundCheck.Ray ? IsGroundedCheckRay(debug) : IsGroundedCheckSphere(debug);
+            IsGrounded = false;
+
+            if (groundCheck == GroundCheck.Ray)
+                IsGrounded = IsGroundedCheckRay(debug);
+            else if (groundCheck == GroundCheck.Sphere)
+                IsGrounded = IsGroundedCheckSphere(debug);
+            else if (groundCheck == GroundCheck.Cube)
+                IsGrounded = IsGroundedCheckSphere(debug);
 
             if (debug)
             {
@@ -55,24 +62,28 @@ namespace Packtool
         {
             var origins = new Vector3[] {
                 characterCollider.bounds.center,   // MIDDLE
-                characterCollider.bounds.center + Vector3.right * -ColliderRedius, // LEFT
-                characterCollider.bounds.center + Vector3.right * ColliderRedius,   // RIGHT
-                characterCollider.bounds.center + Vector3.forward * -ColliderRedius,    // BACKWARD
-                characterCollider.bounds.center + Vector3.forward * ColliderRedius,   // FOREWARD
-        };
+                characterCollider.bounds.center + Vector3.right * -GroundRadius, // LEFT
+                characterCollider.bounds.center + Vector3.right * GroundRadius,   // RIGHT
+                characterCollider.bounds.center + Vector3.forward * -GroundRadius,    // BACKWARD
+                characterCollider.bounds.center + Vector3.forward * GroundRadius,   // FOREWARD
+            };
 
-            var maxDistance = groundDistanceCheck + characterCollider.bounds.center.y - characterCollider.bounds.min.y;
+            var maxDistance = groundDistance + characterCollider.bounds.center.y - characterCollider.bounds.min.y;
             var hits = new List<RaycastHit>();
 
             foreach (var el in origins)
                 hits.Add(RaycastHitX.Cast(el, Vector3.down, groundMask, maxDistance, debug));
-
             return hits.Select(el => el.collider != null).Contains(true);
         }
 
         protected bool IsGroundedCheckSphere(bool debug = false)
         {
-            return Physics.CheckSphere(GroundCheckPosition, ColliderRedius, groundMask);
+            if (groundCheck == GroundCheck.Sphere)
+                return Physics.CheckSphere(FeetsCenterPos, GroundRadius, groundMask);
+            else if (groundCheck == GroundCheck.Cube)
+                return Physics.CheckBox(FeetsCenterPos, Vector3.one * GroundRadius, Quaternion.identity, groundMask);
+
+            return false;
         }
 
         void OnDrawGizmos()
@@ -80,9 +91,9 @@ namespace Packtool
             if (debug)
             {
                 if (groundCheck == GroundCheck.Sphere)
-                {
-                    Gizmos.DrawWireSphere(GroundCheckPosition, ColliderRedius);
-                }
+                    Gizmos.DrawWireSphere(FeetsCenterPos, GroundRadius);
+                else if (groundCheck == GroundCheck.Cube)
+                    Gizmos.DrawWireCube(FeetsCenterPos, Vector3.one * GroundRadius * 2f);
             }
         }
     }

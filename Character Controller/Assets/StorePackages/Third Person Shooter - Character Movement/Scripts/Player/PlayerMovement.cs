@@ -6,6 +6,7 @@ namespace Packtool
 
     public class PlayerMovement : Character
     {
+
         #region Singletone
 
         public static PlayerMovement Instance { get; private set; }
@@ -50,7 +51,6 @@ namespace Packtool
         public float jumpHeight = 8f;
         public Move air = Move.Moveable;
         public Move land = Move.NotMoveable;
-        public float groundCheckDistance = .01f;
 
         public KeyCode jumpKeyCode = KeyCode.Space;
         public KeyCode runKeyCode = KeyCode.LeftShift;
@@ -92,15 +92,16 @@ namespace Packtool
 
         void Gravity()
         {
-            const float GROUNDED_VELOCITY = -2f;
+            const float GROUNDED_VELOCITY = -9.81f;
 
             if (animator)
                 animator.SetBool("Float", !IsGrounded);
 
-            if (!IsGrounded)
-                velocity.y += gravity * Time.deltaTime;
-            else
+            if (IsGrounded && velocity.y < 0)
                 velocity.y = GROUNDED_VELOCITY;
+
+            if (!IsGrounded && WasGrounded && velocity.y < 0)
+                velocity.y = 0f;
 
             if (Input.GetButtonDown("Jump") && IsGrounded)
             {
@@ -115,6 +116,8 @@ namespace Packtool
                 if (landClipsData.clips.Length > 0)
                     SoundFX(landClipsData);
             }
+
+            velocity.y += gravity * Time.deltaTime;
 
             controller.Move(velocity * Time.deltaTime);
         }
@@ -164,6 +167,8 @@ namespace Packtool
             var go = new GameObject("Sound fx");
             var audioSource = go.AddComponent<AudioSource>();
             var (clip, length) = data.RandomClip();
+
+            go.transform.position = transform.position;
 
             audioSource.clip = clip;
             audioSource.volume = data.volume;
