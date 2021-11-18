@@ -14,8 +14,6 @@ namespace MarwanZaky
 
         Vector3 velocity = Vector3.zero;
 
-        float speed = 0f;
-
         bool isGrounded = false;
         bool wasGrounded = false;
 
@@ -28,17 +26,7 @@ namespace MarwanZaky
         [SerializeField] LayerMask groundMask;
         [SerializeField] MoveAir moveAir = MoveAir.Moveable;
 
-        public float Speed
-        {
-            get
-            {
-                const float SMOOTH_TIME = 10f;
-                var newSpeed = IsRunning ? runSpeed : walkSpeed;
-                speed = Mathf.Lerp(speed, newSpeed, SMOOTH_TIME * Time.deltaTime);
-                return speed;
-            }
-        }
-
+        public float Speed => IsRunning ? runSpeed : walkSpeed;
         public bool IsRunning => Input.GetKey(KeyCode.LeftShift);
         public bool IsMoving { get; set; }
 
@@ -66,12 +54,13 @@ namespace MarwanZaky
 
         private void IsGrounded()
         {
-            isGrounded = IsGroundedSphere(controller.radius, col, groundMask, DEBUG);
+            // Is grounded
+            isGrounded = IsGroundedSphere(col, controller.radius, groundMask, true);
 
             if (isGrounded && velocity.y < 0)
-                velocity.y = -2f;
+                velocity.y = -5f;
 
-            // play sound fx on land
+            // Play sound fx on land
             if (isGrounded && !wasGrounded)
                 AudioManager.Instance.Play("Land");
 
