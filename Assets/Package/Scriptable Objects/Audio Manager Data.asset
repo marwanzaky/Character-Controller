@@ -15,19 +15,19 @@ MonoBehaviour:
   datas:
   - name: Walk
     onStart: 0
-    clip: {fileID: 8300000, guid: cbbca3921455b41ef8bc10fd46ab4009, type: 3}
+    clip: {fileID: 8300000, guid: 7f94e74ced8b8444c951cf44d909fad4, type: 3}
     volume: 1
     pitchType: 2
     loop: 0
   - name: Jump
     onStart: 0
-    clip: {fileID: 8300000, guid: 998b9fa6007d94068b65749b5ffef41e, type: 3}
+    clip: {fileID: 8300000, guid: 1a4a87080654f44deaff3e4c2fb2d9e2, type: 3}
     volume: 1
     pitchType: 2
     loop: 0
   - name: Land
     onStart: 0
-    clip: {fileID: 8300000, guid: a2c0297b528a640c9ae426933c60f434, type: 3}
+    clip: {fileID: 8300000, guid: cd56cf7704aa04d759410e375fff9fdd, type: 3}
     volume: 1
     pitchType: 2
     loop: 0
