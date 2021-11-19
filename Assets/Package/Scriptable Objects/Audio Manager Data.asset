@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de35ffb54edfc407faf3559c56b75c8d, type: 3}
+  m_Name: Audio Manager Data
+  m_EditorClassIdentifier: 
+  datas:
+  - name: Walk
+    onStart: 0
+    clip: {fileID: 8300000, guid: cbbca3921455b41ef8bc10fd46ab4009, type: 3}
+    volume: 1
+    pitchType: 2
+    loop: 0
+  - name: Jump
+    onStart: 0
+    clip: {fileID: 8300000, guid: 998b9fa6007d94068b65749b5ffef41e, type: 3}
+    volume: 1
+    pitchType: 2
+    loop: 0
+  - name: Land
+    onStart: 0
+    clip: {fileID: 8300000, guid: a2c0297b528a640c9ae426933c60f434, type: 3}
+    volume: 1
+    pitchType: 2
+    loop: 0
