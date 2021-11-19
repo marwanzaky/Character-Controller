@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordWeapon : MonoBehaviour
+namespace MarwanZaky
 {
-    // Start is called before the first frame update
-    void Start()
+    public class SwordWeapon : Weapon
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        protected override void Attack()
+        {
+            base.Attack();
+        }
     }
 }

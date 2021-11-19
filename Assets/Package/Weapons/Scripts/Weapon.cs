@@ -6,7 +6,7 @@ namespace MarwanZaky
     {
         [SerializeField] Animator animator;
 
-        private void Start()
+        private void OnEnable()
         {
             PlayerMovement.OnAttack += Attack;
         }

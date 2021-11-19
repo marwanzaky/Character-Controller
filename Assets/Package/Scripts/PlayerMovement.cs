@@ -41,6 +41,7 @@ namespace MarwanZaky
         public bool IsRunning => Input.GetKey(runKeyCode);
         public bool IsMoving { get; set; }
 
+
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
