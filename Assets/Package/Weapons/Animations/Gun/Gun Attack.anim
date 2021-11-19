@@ -38,7 +38,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Weapon
+    path: Gun
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves:
@@ -67,7 +67,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Weapon/Cylinder/Laser
+    path: Gun/Cylinder/Laser
     classID: 1
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -79,14 +79,14 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1855955664
+      path: 1926661051
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2784443878
+      path: 1516010603
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -139,7 +139,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Weapon
+    path: Gun
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -167,7 +167,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Weapon
+    path: Gun
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -195,7 +195,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Weapon
+    path: Gun
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -223,7 +223,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Weapon/Cylinder/Laser
+    path: Gun/Cylinder/Laser
     classID: 1
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -234,7 +234,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Weapon
+    path: Gun
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -244,7 +244,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Weapon
+    path: Gun
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -254,7 +254,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Weapon
+    path: Gun
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
