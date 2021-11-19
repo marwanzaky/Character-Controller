@@ -8,6 +8,7 @@ namespace MarwanZaky
         public enum MoveAir { Moveable, NotMoveable }
 
         public static Action<int> OnCurrentControllerChange;
+        public static Action OnAttack;
 
         const float GRAVITY = -9.81f;
         const bool DEBUG = true;
@@ -160,6 +161,7 @@ namespace MarwanZaky
         void Attack()
         {
             animator.SetTrigger("Attack");
+            OnAttack?.Invoke();
         }
     }
 }
