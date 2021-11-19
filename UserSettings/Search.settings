@@ -7,7 +7,7 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.785D90A9" = "cinemachine"
+	"last_search.785D90A9" = "convert"
 	"OpenInspectorPreview.785D90A9" = "0"
 	"currentGroup.785D90A9" = "all"
 }
@@ -59,6 +59,7 @@ providers = {
 	}
 }
 recentSearches = [
+	"co"
 ]
 searchItemFavorites = [
 ]
@@ -69,3 +70,4 @@ expandedQueries = [
 queryBuilder = false
 ignoredProperties = "id;name;classname;imagecontentshash"
 helperWidgetCurrentArea = "all"
+disabledIndexers = ""
