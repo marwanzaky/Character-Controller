@@ -1,10 +1,13 @@
 using UnityEngine;
+using System;
 
 namespace MarwanZaky
 {
     public class PlayerMovement : Character
     {
         public enum MoveAir { Moveable, NotMoveable }
+
+        public static Action<int> OnCurrentControllerChange;
 
         const float GRAVITY = -9.81f;
         const bool DEBUG = true;
@@ -13,6 +16,8 @@ namespace MarwanZaky
         Transform cam;
 
         Vector3 velocity = Vector3.zero;
+
+        int currentController = 0;
 
         bool isGrounded = false;
         bool wasGrounded = false;
@@ -25,9 +30,14 @@ namespace MarwanZaky
         [SerializeField] float jumpHeight = 8f;
         [SerializeField] LayerMask groundMask;
         [SerializeField] MoveAir moveAir = MoveAir.Moveable;
+        [SerializeField] AnimatorOverrideController[] controllers;
+
+        [Header("Controlls"), SerializeField] KeyCode jumpKeyCode = KeyCode.Space;
+        [SerializeField] KeyCode runKeyCode = KeyCode.LeftShift;
+        [SerializeField] KeyCode attackKeyCode = KeyCode.Mouse0;
 
         public float Speed => IsRunning ? runSpeed : walkSpeed;
-        public bool IsRunning => Input.GetKey(KeyCode.LeftShift);
+        public bool IsRunning => Input.GetKey(runKeyCode);
         public bool IsMoving { get; set; }
 
         private void Start()
@@ -36,6 +46,8 @@ namespace MarwanZaky
 
             col = controller.GetComponent<Collider>();
             cam = Camera.main.transform;
+
+            UpdateCurrentController();
         }
 
         private void Update()
@@ -70,8 +82,27 @@ namespace MarwanZaky
 
         private void Inputs()
         {
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            if (Input.GetKeyDown(jumpKeyCode) && isGrounded)
                 Jump();
+
+            if (Input.GetKeyDown(attackKeyCode))
+                Attack();
+
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                currentController = (currentController + 1) % controllers.Length;
+                OnCurrentControllerChange?.Invoke(currentController);
+                UpdateCurrentController();
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                if (currentController > 0)
+                    currentController--;
+                else currentController = controllers.Length - 1;
+
+                OnCurrentControllerChange?.Invoke(currentController);
+                UpdateCurrentController();
+            }
         }
 
         private void Gravity()
@@ -119,6 +150,16 @@ namespace MarwanZaky
             var newVal = move * (IsRunning ? RUN_VAL : WALK_VAL);
             var res = Mathf.Lerp(animCurVal, newVal, SMOOTH_TIME * Time.deltaTime);
             return newVal;
+        }
+
+        void UpdateCurrentController()
+        {
+            animator.runtimeAnimatorController = controllers[currentController];
+        }
+
+        void Attack()
+        {
+            animator.SetTrigger("Attack");
         }
     }
 }
