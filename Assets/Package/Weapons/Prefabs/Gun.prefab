@@ -69,6 +69,9 @@ MonoBehaviour:
   animator: {fileID: 3939152486376294321}
   bulletPrefab: {fileID: 4038925005956120593, guid: 3cfd7ecddbc844ea5ac13d6e348c3396, type: 3}
   laser: {fileID: 6593476247805697170}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 247
 --- !u!1 &3895365094351730795
 GameObject:
   m_ObjectHideFlags: 0
