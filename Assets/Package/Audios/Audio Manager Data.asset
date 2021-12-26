@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Audio Manager Data
   m_EditorClassIdentifier: 
   datas:
-  - name: Walk
+  - name: Fire
     onStart: 0
     clip: {fileID: 8300000, guid: 7f94e74ced8b8444c951cf44d909fad4, type: 3}
     volume: 1
