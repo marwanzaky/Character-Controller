@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Packtool
+namespace MarwanZaky
 {
     public static class RaycastHitX
     {

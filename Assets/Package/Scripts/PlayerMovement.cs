@@ -29,6 +29,8 @@ namespace MarwanZaky
         [SerializeField] float runSpeed = 10f;
         [SerializeField] float gravityScale = 1f;
         [SerializeField] float jumpHeight = 8f;
+
+        [Header("Settings"), SerializeField] CursorLockMode cursorLockMode = CursorLockMode.None;
         [SerializeField] LayerMask groundMask;
         [SerializeField] MoveAir moveAir = MoveAir.Moveable;
         [SerializeField] AnimatorOverrideController[] controllers;
@@ -41,15 +43,43 @@ namespace MarwanZaky
         public bool IsRunning => Input.GetKey(runKeyCode);
         public bool IsMoving { get; set; }
 
-
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = cursorLockMode;
 
             col = controller.GetComponent<Collider>();
             cam = Camera.main.transform;
 
-            UpdateCurrentController();
+            UpdateCurrentController(0);     // select default controller
+        }
+
+        private void OnEnable()
+        {
+            OnCurrentControllerChange += UpdateCurrentController;
+        }
+
+        private void OnDisable()
+        {
+            OnCurrentControllerChange -= UpdateCurrentController;
+        }
+
+        private void OnGUI()
+        {
+            var buttonStyle = new GUIStyle(GUI.skin.button);
+            buttonStyle.fontSize = 18;
+
+            if (GUI.Button(new Rect(50, 32, 200, 32), $"Cursor Locked", buttonStyle))
+                Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
+
+            if (GUI.Button(new Rect(50, 69, 200, 32), "Movement (0)", buttonStyle))
+                OnCurrentControllerChange?.Invoke(0);
+
+            if (GUI.Button(new Rect(50, 106, 200, 32), "Sword (1)", buttonStyle))
+                OnCurrentControllerChange?.Invoke(1);
+
+            if (GUI.Button(new Rect(50, 143, 200, 32), "Gun (2)", buttonStyle))
+                OnCurrentControllerChange?.Invoke(2);
+
         }
 
         private void Update()
@@ -91,20 +121,9 @@ namespace MarwanZaky
                 Attack();
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-            {
-                currentController = (currentController + 1) % controllers.Length;
-                OnCurrentControllerChange?.Invoke(currentController);
-                UpdateCurrentController();
-            }
+                UseNextController();
             else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-            {
-                if (currentController > 0)
-                    currentController--;
-                else currentController = controllers.Length - 1;
-
-                OnCurrentControllerChange?.Invoke(currentController);
-                UpdateCurrentController();
-            }
+                UsePreviousController();
         }
 
         private void Gravity()
@@ -136,13 +155,43 @@ namespace MarwanZaky
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * GRAVITY * gravityScale);
         }
 
-        void LookAtCamera()
+        private void LookAtCamera()
         {
             const float SMOOTH_TIME = 5f;
             var camAngles = Packtool.Vector3X.IgnoreXZ(cam.eulerAngles);
             var targetRot = Quaternion.Euler(camAngles);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime);
         }
+
+        private void Attack()
+        {
+            animator.SetTrigger("Attack");
+            OnAttack?.Invoke();
+        }
+
+        #region Controller
+
+        private void UseNextController()
+        {
+            currentController = (currentController + 1) % controllers.Length;
+            OnCurrentControllerChange?.Invoke(currentController);
+        }
+
+        private void UsePreviousController()
+        {
+            if (currentController > 0)
+                currentController--;
+            else currentController = controllers.Length - 1;
+
+            OnCurrentControllerChange?.Invoke(currentController);
+        }
+
+        private void UpdateCurrentController(int currentController)
+        {
+            animator.runtimeAnimatorController = controllers[currentController];
+        }
+
+        #endregion
 
         float GetAnimMoveVal(float move, float animCurVal)
         {
@@ -152,17 +201,6 @@ namespace MarwanZaky
             var newVal = move * (IsRunning ? RUN_VAL : WALK_VAL);
             var res = Mathf.Lerp(animCurVal, newVal, SMOOTH_TIME * Time.deltaTime);
             return newVal;
-        }
-
-        void UpdateCurrentController()
-        {
-            animator.runtimeAnimatorController = controllers[currentController];
-        }
-
-        void Attack()
-        {
-            animator.SetTrigger("Attack");
-            OnAttack?.Invoke();
         }
     }
 }

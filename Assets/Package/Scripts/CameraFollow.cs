@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Packtool
+namespace MarwanZaky
 {
     public class CameraFollow : MonoBehaviour
     {
@@ -14,11 +14,6 @@ namespace Packtool
         public float minXRotation = -90f;
         public float maxXRotation = 90f;
         public float mouseSensivity = 100f;
-
-        void Start()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
 
         void Update()
         {
