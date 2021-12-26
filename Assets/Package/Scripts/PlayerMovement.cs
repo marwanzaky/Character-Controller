@@ -68,16 +68,16 @@ namespace MarwanZaky
             var buttonStyle = new GUIStyle(GUI.skin.button);
             buttonStyle.fontSize = 18;
 
-            if (GUI.Button(new Rect(50, 32, 200, 32), $"Cursor Locked", buttonStyle))
-                Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
+            if (GUI.Button(new Rect(50, 32, 200, 32), $"Cursor Locked (M)", buttonStyle))
+                ToggleCursorLockState();
 
-            if (GUI.Button(new Rect(50, 69, 200, 32), "Movement (0)", buttonStyle))
+            if (GUI.Button(new Rect(50, 69, 200, 32), "Movement (1)", buttonStyle))
                 OnCurrentControllerChange?.Invoke(0);
 
-            if (GUI.Button(new Rect(50, 106, 200, 32), "Sword (1)", buttonStyle))
+            if (GUI.Button(new Rect(50, 106, 200, 32), "Sword (2)", buttonStyle))
                 OnCurrentControllerChange?.Invoke(1);
 
-            if (GUI.Button(new Rect(50, 143, 200, 32), "Gun (2)", buttonStyle))
+            if (GUI.Button(new Rect(50, 143, 200, 32), "Gun (3)", buttonStyle))
                 OnCurrentControllerChange?.Invoke(2);
 
         }
@@ -120,10 +120,25 @@ namespace MarwanZaky
             if (Input.GetKeyDown(attackKeyCode))
                 Attack();
 
+            // Scroll between controllers
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
                 UseNextController();
             else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
                 UsePreviousController();
+
+            // Toggle cursor lock state
+            if (Input.GetKeyDown(KeyCode.M))
+                ToggleCursorLockState();
+
+            // Switch controllers.
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                OnCurrentControllerChange?.Invoke(0);
+
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+                OnCurrentControllerChange?.Invoke(1);
+
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+                OnCurrentControllerChange?.Invoke(2);
         }
 
         private void Gravity()
@@ -167,6 +182,11 @@ namespace MarwanZaky
         {
             animator.SetTrigger("Attack");
             OnAttack?.Invoke();
+        }
+
+        private void ToggleCursorLockState()
+        {
+            Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
         }
 
         #region Controller

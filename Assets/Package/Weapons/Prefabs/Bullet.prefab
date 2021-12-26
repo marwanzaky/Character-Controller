@@ -47,9 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f000a571bc2449498421f2e9c26d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 1
-  speed: 30
+  lifetime: 3
+  speed: 70
   destroyPrefab: {fileID: 6666361919546285360, guid: e1bda493e5280496c98264ba42f1361c, type: 3}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 119
 --- !u!54 &7961103381227351349
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -65,7 +68,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &5870104128109794672
 GameObject:
   m_ObjectHideFlags: 0
