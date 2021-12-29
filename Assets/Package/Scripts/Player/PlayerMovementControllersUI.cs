@@ -11,12 +11,12 @@ namespace MarwanZaky
         {
             // GetAllControllers();
 
-            PlayerMovement.OnCurrentControllerChange += CurrentController;
+            PlayerMovement.Instance.OnCurrentControllerChange += CurrentController;
         }
 
         private void OnDisable()
         {
-            PlayerMovement.OnCurrentControllerChange -= CurrentController;
+            PlayerMovement.Instance.OnCurrentControllerChange -= CurrentController;
         }
 
         public void CurrentController(int controller)

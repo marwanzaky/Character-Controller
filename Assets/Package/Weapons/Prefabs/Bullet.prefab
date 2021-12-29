@@ -52,7 +52,8 @@ MonoBehaviour:
   destroyPrefab: {fileID: 6666361919546285360, guid: e1bda493e5280496c98264ba42f1361c, type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 321
+  damage: 10
 --- !u!54 &7961103381227351349
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -71,7 +71,7 @@ MonoBehaviour:
   laser: {fileID: 6593476247805697170}
   layerMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 321
 --- !u!1 &3895365094351730795
 GameObject:
   m_ObjectHideFlags: 0

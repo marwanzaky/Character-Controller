@@ -11,12 +11,12 @@ namespace MarwanZaky
 
         private void OnEnable()
         {
-            PlayerMovement.OnAttack += Attack;
+            PlayerMovement.Instance.OnAttack += Attack;
         }
 
         private void OnDisable()
         {
-            PlayerMovement.OnAttack -= Attack;
+            PlayerMovement.Instance.OnAttack -= Attack;
         }
 
         protected virtual void Attack()

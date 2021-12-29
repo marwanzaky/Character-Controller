@@ -9,6 +9,7 @@ namespace MarwanZaky
         [SerializeField] float speed = 30f;
         [SerializeField] GameObject destroyPrefab;
         [SerializeField] LayerMask layerMask;
+        [SerializeField] int damage = 10;
 
         private void Start()
         {
@@ -23,16 +24,23 @@ namespace MarwanZaky
             var hit = RaycastHitX.Cast(prevPos, dir, layerMask, dis, debug: true);
 
             if (hit.collider != null)
-                DestroyObject(hit.point, dir);
+                OnCollide(hit, dir);
 
             prevPos = pos;
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
+        private void OnCollide(RaycastHit hit, Vector3 dir)
+        {
+            DestroyObject(hit.point, dir);
+
+            if (hit.collider.gameObject.layer == 8)
+                hit.collider.GetComponent<Character>().Health -= damage;
+        }
+
         void DestroyObject(Vector3 hitPoint, Vector3 dir)
         {
-            var go = Instantiate(destroyPrefab, hitPoint, Quaternion.LookRotation(dir));
-            // go.transform.rotation = Quaternion.Euler(90, 100, 110);
+            Instantiate(destroyPrefab, hitPoint, Quaternion.LookRotation(dir));
             Destroy(gameObject);
         }
     }
