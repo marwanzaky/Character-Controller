@@ -7,12 +7,12 @@ namespace MarwanZaky
         [Header("Enemy"), SerializeField] float radius;
         [SerializeField] LayerMask playerMask;
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
             healthBar.OnOutOfHealth += Die;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
             healthBar.OnOutOfHealth -= Die;
         }

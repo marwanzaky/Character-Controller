@@ -44,16 +44,6 @@ namespace MarwanZaky
             base.Start();
         }
 
-        private void OnEnable()
-        {
-            OnCurrentControllerChange += UpdateCurrentController;
-        }
-
-        private void OnDisable()
-        {
-            OnCurrentControllerChange -= UpdateCurrentController;
-        }
-
         private void OnGUI()
         {
             var buttonStyle = new GUIStyle(GUI.skin.button);
@@ -124,11 +114,19 @@ namespace MarwanZaky
             var moveY = Input.GetAxis("Vertical");
             var move = (transform.right * moveX + transform.forward * moveY).normalized;
 
-            animator.SetFloat("MoveX", GetAnimMoveVal(moveX, animator.GetFloat("MoveX")));
-            animator.SetFloat("MoveY", GetAnimMoveVal(moveY, animator.GetFloat("MoveY")));
+            // animator.SetFloat("MoveX", GetAnimMoveVal(moveX, animator.GetFloat("MoveX")));
+            // animator.SetFloat("MoveY", GetAnimMoveVal(moveY, animator.GetFloat("MoveY")));
+
+            Animator_MoveX = GetAnimMoveVal(moveX, Animator_MoveX);
+            Animator_MoveY = GetAnimMoveVal(moveY, Animator_MoveY);
 
             controller.Move(move * Speed * Time.deltaTime);
             IsMoving = move.magnitude >= IS_MOVING_MIN_MAG;
+        }
+
+        protected override void OnGrounded()
+        {
+            AudioManager.Instance.Play("Land");
         }
 
         protected override void Jump()

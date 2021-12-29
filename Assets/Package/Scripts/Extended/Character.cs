@@ -39,6 +39,28 @@ namespace MarwanZaky
             set => healthBar.Health = value;
         }
 
+        protected float Animator_MoveX
+        {
+            get => animator.GetFloat("MoveX");
+            set => animator.SetFloat("MoveX", value);
+        }
+
+        protected float Animator_MoveY
+        {
+            get => animator.GetFloat("MoveY");
+            set => animator.SetFloat("MoveY", value);
+        }
+
+        protected virtual void OnEnable()
+        {
+            OnCurrentControllerChange += UpdateCurrentController;
+        }
+
+        protected virtual void OnDisable()
+        {
+            OnCurrentControllerChange -= UpdateCurrentController;
+        }
+
         protected virtual void Start()
         {
             col = controller.GetComponent<Collider>();
@@ -68,7 +90,7 @@ namespace MarwanZaky
 
             // Play sound fx on land
             if (isGrounded && !wasGrounded)
-                AudioManager.Instance.Play("Land");
+                OnGrounded();
 
             wasGrounded = isGrounded;
             animator.SetBool("Float", !isGrounded);
@@ -78,6 +100,11 @@ namespace MarwanZaky
         {
             animator.SetTrigger("Attack");
             OnAttack?.Invoke();
+        }
+
+        protected virtual void OnGrounded()
+        {
+
         }
 
         private void Gravity()
