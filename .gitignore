@@ -6,6 +6,7 @@
 [Ll]ogs/
 Assets/Screeshot*Tool
 Assets/AssetStoreTools*
+.DS_Store
 
 # Visual Studio cache directory
 .vs/
