@@ -99,6 +99,7 @@ MonoBehaviour:
   controller: {fileID: 6056376484247557402}
   animator: {fileID: 2356810127832331213}
   healthBar: {fileID: 7380858210496642438}
+  smoothMoveTime: 0.2
   walkSpeed: 5
   runSpeed: 10
   gravityScale: 1

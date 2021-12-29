@@ -22,6 +22,7 @@ namespace MarwanZaky
         [Header("Character"), SerializeField] protected CharacterController controller;
         [SerializeField] protected Animator animator;
         [SerializeField] protected HealthBar healthBar;
+        [SerializeField] protected float smoothMoveTime = .2f;
         [SerializeField] protected float walkSpeed = 5f;
         [SerializeField] protected float runSpeed = 10f;
         [SerializeField] protected float gravityScale = 1f;

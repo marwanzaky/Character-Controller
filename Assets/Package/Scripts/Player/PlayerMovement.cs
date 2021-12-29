@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.InputSystem;
 
 namespace MarwanZaky
 {
@@ -9,13 +10,10 @@ namespace MarwanZaky
 
         public static PlayerMovement Instance { get; private set; }
 
-        private void Awake()
+        private void Singletone()
         {
             if (Instance == null)
-            {
                 Instance = this;
-                DontDestroyOnLoad(this);
-            }
             else Destroy(gameObject);
         }
 
@@ -23,7 +21,12 @@ namespace MarwanZaky
 
         public enum MoveAir { Moveable, NotMoveable }
 
+        InputMaster inputMaster;
+
         Transform cam;
+
+        Vector3 smoothMove;
+        Vector3 smoothMoveVelocity;
 
         [Header("Player"), SerializeField] CursorLockMode cursorLockMode = CursorLockMode.None;
         [SerializeField] MoveAir moveAir = MoveAir.Moveable;
@@ -35,6 +38,27 @@ namespace MarwanZaky
         public float Speed => IsRunning ? runSpeed : walkSpeed;
         public bool IsRunning => Input.GetKey(runKeyCode);
         public bool IsMoving { get; set; }
+
+        private void Awake()
+        {
+            Singletone();
+
+            inputMaster = new InputMaster();
+        }
+
+        protected override void OnEnable()
+        {
+            inputMaster.Enable();
+
+            base.OnEnable();
+        }
+
+        protected override void OnDisable()
+        {
+            inputMaster.Disable();
+
+            base.OnDisable();
+        }
 
         protected override void Start()
         {
@@ -107,20 +131,16 @@ namespace MarwanZaky
         {
             const float IS_MOVING_MIN_MAG = .02f;
 
-            if (moveAir == MoveAir.NotMoveable && !isGrounded)
-                return;
+            if (!isGrounded && moveAir == MoveAir.NotMoveable) return;
 
-            var moveX = Input.GetAxis("Horizontal");
-            var moveY = Input.GetAxis("Vertical");
-            var move = (transform.right * moveX + transform.forward * moveY).normalized;
+            var input = inputMaster.Player.Movement.ReadValue<Vector2>();
+            var move = (transform.right * input.x + transform.forward * input.y).normalized;
+            smoothMove = Vector3.SmoothDamp(smoothMove, move, ref smoothMoveVelocity, smoothMoveTime);
 
-            // animator.SetFloat("MoveX", GetAnimMoveVal(moveX, animator.GetFloat("MoveX")));
-            // animator.SetFloat("MoveY", GetAnimMoveVal(moveY, animator.GetFloat("MoveY")));
+            Animator_MoveX = GetAnimMoveVal(input.x);
+            Animator_MoveY = GetAnimMoveVal(input.y);
 
-            Animator_MoveX = GetAnimMoveVal(moveX, Animator_MoveX);
-            Animator_MoveY = GetAnimMoveVal(moveY, Animator_MoveY);
-
-            controller.Move(move * Speed * Time.deltaTime);
+            controller.Move(smoothMove * Speed * Time.deltaTime);
             IsMoving = move.magnitude >= IS_MOVING_MIN_MAG;
         }
 
@@ -145,14 +165,11 @@ namespace MarwanZaky
 
         private void ToggleCursorLockState() => Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
 
-        float GetAnimMoveVal(float move, float animCurVal)
+        float GetAnimMoveVal(float move)
         {
-            const float SMOOTH_TIME = 10f;
             const float WALK_VAL = 1f;
             const float RUN_VAL = 2f;
-            var newVal = move * (IsRunning ? RUN_VAL : WALK_VAL);
-            var res = Mathf.Lerp(animCurVal, newVal, SMOOTH_TIME * Time.deltaTime);
-            return newVal;
+            return move * (IsRunning ? RUN_VAL : WALK_VAL);
         }
     }
 }

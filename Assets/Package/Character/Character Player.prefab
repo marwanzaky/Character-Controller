@@ -103,22 +103,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7205f56d9dbe4fdb87f1ff325993b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 8129983753176788254}
   controller: {fileID: 4805622393118328194}
   animator: {fileID: 3893502731106444117}
+  healthBar: {fileID: 8129983753176788254}
+  smoothMoveTime: 0.2
   walkSpeed: 3
   runSpeed: 10
   gravityScale: 2
   jumpHeight: 5
-  cursorLockMode: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  moveAir: 0
   controllers:
   - {fileID: 22100000, guid: c54fa56cc9bee4c3e84015898b933400, type: 2}
   - {fileID: 22100000, guid: 65a6569b02b354224a80e3bdedd2050c, type: 2}
   - {fileID: 22100000, guid: af6f13514e25b4abeb20c9222a174ee8, type: 2}
+  cursorLockMode: 1
+  moveAir: 0
   jumpKeyCode: 32
   runKeyCode: 304
   attackKeyCode: 323
