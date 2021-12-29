@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3939152486376294321}
+  audioName: Fire
   bulletPrefab: {fileID: 4038925005956120593, guid: 3cfd7ecddbc844ea5ac13d6e348c3396, type: 3}
   laser: {fileID: 6593476247805697170}
   layerMask:

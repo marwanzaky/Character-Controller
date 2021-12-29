@@ -5,7 +5,8 @@ namespace MarwanZaky
     public class Weapon : MonoBehaviour
     {
         const string ATTACK_ANIM = "Attack";
-        [SerializeField] Animator animator;
+        [Header("Weapon"), SerializeField] Animator animator;
+        [SerializeField] string audioName;
 
         protected bool IsAttacking => animator.GetCurrentAnimatorStateInfo(0).IsName(ATTACK_ANIM);
 
@@ -21,8 +22,12 @@ namespace MarwanZaky
 
         protected virtual void Attack()
         {
-            if (!IsAttacking)
-                animator.SetTrigger(ATTACK_ANIM);
+            if (IsAttacking) return;
+
+            animator.SetTrigger(ATTACK_ANIM);
+
+            if (!string.IsNullOrEmpty(audioName))
+                AudioManager.Instance.Play(audioName);
         }
     }
 }

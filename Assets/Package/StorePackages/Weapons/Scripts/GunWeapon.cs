@@ -6,7 +6,7 @@ namespace MarwanZaky
     {
         Camera cam;
 
-        [SerializeField] GameObject bulletPrefab;
+        [Header("Gun"), SerializeField] GameObject bulletPrefab;
         [SerializeField] Transform laser;
         [SerializeField] LayerMask layerMask;
 

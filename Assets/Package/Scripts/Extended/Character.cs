@@ -34,11 +34,7 @@ namespace MarwanZaky
         public Action OnAttack { get; set; }
         public Action<int> OnCurrentControllerChange { get; set; }
 
-        public float Health
-        {
-            get => healthBar.Health;
-            set => healthBar.Health = value;
-        }
+        public float Health => healthBar.Health;
 
         protected float Animator_MoveX
         {
@@ -111,6 +107,12 @@ namespace MarwanZaky
         private void Gravity()
         {
             velocity.y = velocity.y + GRAVITY * gravityScale * Time.deltaTime;
+        }
+
+        public void Damage(int damage)
+        {
+            healthBar.Health -= damage;
+            AudioManager.Instance.Play(name: "Hurt", position: transform.position, spatialBlend: 1);
         }
 
         #region Controller

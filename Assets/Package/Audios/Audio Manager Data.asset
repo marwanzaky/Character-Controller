@@ -13,12 +13,6 @@ MonoBehaviour:
   m_Name: Audio Manager Data
   m_EditorClassIdentifier: 
   datas:
-  - name: Fire
-    onStart: 0
-    clip: {fileID: 8300000, guid: 7f94e74ced8b8444c951cf44d909fad4, type: 3}
-    volume: 1
-    pitchType: 2
-    loop: 0
   - name: Jump
     onStart: 0
     clip: {fileID: 8300000, guid: 1a4a87080654f44deaff3e4c2fb2d9e2, type: 3}
@@ -29,5 +23,17 @@ MonoBehaviour:
     onStart: 0
     clip: {fileID: 8300000, guid: cd56cf7704aa04d759410e375fff9fdd, type: 3}
     volume: 1
+    pitchType: 2
+    loop: 0
+  - name: Hurt
+    onStart: 0
+    clip: {fileID: 8300000, guid: 3dcb9b5c0a6aa4d5a9fc12d9ab1e6bc6, type: 3}
+    volume: 1
+    pitchType: 2
+    loop: 0
+  - name: Fire
+    onStart: 0
+    clip: {fileID: 8300000, guid: bfc413f15be2440f688728f6986e851f, type: 3}
+    volume: 0.5
     pitchType: 2
     loop: 0
