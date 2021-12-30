@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using MarwanZaky.Methods;
 
-namespace Hobbies
+namespace MarwanZaky
 {
     public class LookAtCamera : MonoBehaviour
     {

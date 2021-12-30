@@ -34,6 +34,6 @@ MonoBehaviour:
   - name: Fire
     onStart: 0
     clip: {fileID: 8300000, guid: bfc413f15be2440f688728f6986e851f, type: 3}
-    volume: 0.5
+    volume: 0.2
     pitchType: 2
     loop: 0

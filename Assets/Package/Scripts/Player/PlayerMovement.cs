@@ -1,9 +1,11 @@
 using UnityEngine;
-using System;
-using UnityEngine.InputSystem;
+using MarwanZaky.Methods;
+using MarwanZaky.Audio;
 
 namespace MarwanZaky
 {
+    public enum MoveAir { Moveable, NotMoveable }
+
     public class PlayerMovement : Character
     {
         #region Singletone
@@ -19,43 +21,61 @@ namespace MarwanZaky
 
         #endregion
 
-        public enum MoveAir { Moveable, NotMoveable }
+        InputMaster controlls;
 
-        InputMaster inputMaster;
+        const float GRAVITY = -9.81f;
+
+        Vector3 velocity = Vector3.zero;
+
+        bool isGrounded = false;
+        bool wasGrounded = false;
 
         Transform cam;
 
+        Vector3 input;
         Vector3 smoothMove;
         Vector3 smoothMoveVelocity;
 
-        [Header("Player"), SerializeField] CursorLockMode cursorLockMode = CursorLockMode.None;
-        [SerializeField] MoveAir moveAir = MoveAir.Moveable;
+        Collider col;
 
-        [Space, SerializeField] KeyCode jumpKeyCode = KeyCode.Space;
-        [SerializeField] KeyCode runKeyCode = KeyCode.LeftShift;
-        [SerializeField] KeyCode attackKeyCode = KeyCode.Mouse0;
+        [Header("Player"), SerializeField] protected CharacterController controller;
+        [SerializeField] CursorLockMode cursorLockMode = CursorLockMode.None;
+        [SerializeField] MoveAir moveAir = MoveAir.Moveable;
+        [SerializeField] protected LayerMask groundMask;
+        [SerializeField] protected float jumpHeight = 8f;
+        [SerializeField] protected float gravityScale = 1f;
+        [SerializeField] protected float smoothMoveTime = .2f;
 
         public float Speed => IsRunning ? runSpeed : walkSpeed;
-        public bool IsRunning => Input.GetKey(runKeyCode);
-        public bool IsMoving { get; set; }
+        public bool IsRunning { get; set; }
 
         private void Awake()
         {
             Singletone();
 
-            inputMaster = new InputMaster();
+            controlls = new InputMaster();
+
+            controlls.Player.Run.started += (res) => IsRunning = true;
+            controlls.Player.Run.canceled += (res) => IsRunning = false;
+
+            controlls.Player.Attack.performed += (res) => Attack();
+            controlls.Player.Jump.performed += (res) =>
+            {
+                if (isGrounded)
+                    Jump();
+            };
         }
 
         protected override void OnEnable()
         {
-            inputMaster.Enable();
+            controlls.Enable();
 
             base.OnEnable();
         }
 
         protected override void OnDisable()
         {
-            inputMaster.Disable();
+            controlls.Disable();
 
             base.OnDisable();
         }
@@ -65,33 +85,21 @@ namespace MarwanZaky
             Cursor.lockState = cursorLockMode;
             cam = Camera.main.transform;
 
+            col = controller.GetComponent<Collider>();
+
             base.Start();
-        }
-
-        private void OnGUI()
-        {
-            var buttonStyle = new GUIStyle(GUI.skin.button);
-            buttonStyle.fontSize = 18;
-
-            if (GUI.Button(new Rect(50, 32, 200, 32), $"Cursor Locked (M)", buttonStyle))
-                ToggleCursorLockState();
-
-            if (GUI.Button(new Rect(50, 69, 200, 32), "Movement (1)", buttonStyle))
-                OnCurrentControllerChange?.Invoke(0);
-
-            if (GUI.Button(new Rect(50, 106, 200, 32), "Sword (2)", buttonStyle))
-                OnCurrentControllerChange?.Invoke(1);
-
-            if (GUI.Button(new Rect(50, 143, 200, 32), "Gun (3)", buttonStyle))
-                OnCurrentControllerChange?.Invoke(2);
-
         }
 
         protected override void Update()
         {
+            input = controlls.Player.Movement.ReadValue<Vector2>();
+
             base.Update();
 
-            if (IsMoving)
+            IsGrounded();
+            Gravity();
+
+            if (input.magnitude > 0)
                 LookAtCamera();
 
             Movement();
@@ -100,12 +108,6 @@ namespace MarwanZaky
 
         private void Inputs()
         {
-            if (Input.GetKeyDown(jumpKeyCode) && isGrounded)
-                Jump();
-
-            if (Input.GetKeyDown(attackKeyCode))
-                Attack();
-
             // Scroll between controllers
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
                 UseNextController();
@@ -129,11 +131,8 @@ namespace MarwanZaky
 
         private void Movement()
         {
-            const float IS_MOVING_MIN_MAG = .02f;
-
             if (!isGrounded && moveAir == MoveAir.NotMoveable) return;
 
-            var input = inputMaster.Player.Movement.ReadValue<Vector2>();
             var move = (transform.right * input.x + transform.forward * input.y).normalized;
             smoothMove = Vector3.SmoothDamp(smoothMove, move, ref smoothMoveVelocity, smoothMoveTime);
 
@@ -141,31 +140,68 @@ namespace MarwanZaky
             Animator_MoveY = GetAnimMoveVal(input.y);
 
             controller.Move(smoothMove * Speed * Time.deltaTime);
-            IsMoving = move.magnitude >= IS_MOVING_MIN_MAG;
         }
 
-        protected override void OnGrounded()
+        protected override void Move()
         {
-            AudioManager.Instance.Play("Land");
+            controller.Move(velocity * Time.deltaTime);
         }
 
-        protected override void Jump()
+        private void IsGrounded()
         {
-            base.Jump();
+            isGrounded = IsGroundedSphere(col, controller.radius, groundMask, true);
+
+            if (isGrounded && velocity.y < 0)
+                velocity.y = -5f;
+
+            if (isGrounded && !wasGrounded) // on land
+                AudioManager.Instance.Play("Land");
+
+            wasGrounded = isGrounded;
+            animator.SetBool("Float", !isGrounded);
+        }
+
+        private void Gravity()
+        {
+            velocity.y = velocity.y + GRAVITY * gravityScale * Time.deltaTime;
+        }
+
+        private void Jump()
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * GRAVITY * gravityScale);
             AudioManager.Instance.Play("Jump");
+        }
+
+        private void OnGUI()
+        {
+            var buttonStyle = new GUIStyle(GUI.skin.button);
+            buttonStyle.fontSize = 18;
+
+            if (GUI.Button(new Rect(50, 32, 200, 32), $"Cursor Locked (M)", buttonStyle))
+                ToggleCursorLockState();
+
+            if (GUI.Button(new Rect(50, 69, 200, 32), "Movement (1)", buttonStyle))
+                OnCurrentControllerChange?.Invoke(0);
+
+            if (GUI.Button(new Rect(50, 106, 200, 32), "Sword (2)", buttonStyle))
+                OnCurrentControllerChange?.Invoke(1);
+
+            if (GUI.Button(new Rect(50, 143, 200, 32), "Gun (3)", buttonStyle))
+                OnCurrentControllerChange?.Invoke(2);
         }
 
         private void LookAtCamera()
         {
             const float SMOOTH_TIME = 5f;
-            var camAngles = Packtool.Vector3X.IgnoreXZ(cam.eulerAngles);
+            var camAngles = Vector3X.IgnoreXZ(cam.eulerAngles);
             var targetRot = Quaternion.Euler(camAngles);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime);
         }
 
-        private void ToggleCursorLockState() => Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
+        private void ToggleCursorLockState() =>
+            Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
 
-        float GetAnimMoveVal(float move)
+        private float GetAnimMoveVal(float move)
         {
             const float WALK_VAL = 1f;
             const float RUN_VAL = 2f;

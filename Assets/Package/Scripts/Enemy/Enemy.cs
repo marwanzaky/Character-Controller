@@ -1,11 +1,20 @@
 using UnityEngine;
+using UnityEngine.AI;
+using MarwanZaky.Methods;
+using System.Linq;
 
 namespace MarwanZaky
 {
     public class Enemy : Character
     {
-        [Header("Enemy"), SerializeField] float radius;
+        Vector3 startPos = Vector3.zero;
+        Vector3 startRot = Vector3.zero;
+
+        [Header("Enemy"), SerializeField] float visionRadius;
+        [SerializeField] string playerTag;
         [SerializeField] LayerMask playerMask;
+        [SerializeField] NavMeshAgent agent;
+        [SerializeField] float minY;
 
         protected override void OnEnable()
         {
@@ -19,6 +28,10 @@ namespace MarwanZaky
 
         protected override void Start()
         {
+            startPos = transform.position;
+
+            agent.speed = walkSpeed;
+
             base.Start();
         }
 
@@ -26,15 +39,18 @@ namespace MarwanZaky
         {
             base.Update();
 
-            RaycastHit hit;
-            Physics.SphereCast(transform.position, radius, Vector3.forward, out hit, Mathf.Infinity, playerMask);
-            if (hit.collider != null)
-                LookAt(hit.collider.transform);
+            FollowTarget();
         }
 
-        private void LookAt(Transform target)
+        private void FollowTarget()
         {
+            var position = Vector3X.IgnoreY(transform.position, minY);
+            var cols = Physics.OverlapSphere(position, visionRadius, playerMask);
+            var taregetCol = cols.FirstOrDefault(el => el.tag == playerTag);
 
+            if (taregetCol != null)
+                agent.SetDestination(taregetCol.transform.position);
+            else agent.SetDestination(startPos);
         }
 
         private void Die()
@@ -44,7 +60,7 @@ namespace MarwanZaky
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawWireSphere(transform.position, radius);
+            Gizmos.DrawWireSphere(Vector3X.IgnoreY(transform.position, minY), visionRadius);
         }
     }
 }

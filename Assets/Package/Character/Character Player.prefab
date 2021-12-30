@@ -70,11 +70,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 8862571541389556929, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 5545811059662544788}
   m_PrefabAsset: {fileID: 0}
---- !u!143 &4805622393118328194 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 1028982202041719318, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
-  m_PrefabInstance: {fileID: 5545811059662544788}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8129983753176788254 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4333919560208151178, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
@@ -103,23 +98,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7205f56d9dbe4fdb87f1ff325993b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 4805622393118328194}
   animator: {fileID: 3893502731106444117}
   healthBar: {fileID: 8129983753176788254}
-  smoothMoveTime: 0.2
   walkSpeed: 3
   runSpeed: 10
-  gravityScale: 2
-  jumpHeight: 5
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
   controllers:
   - {fileID: 22100000, guid: c54fa56cc9bee4c3e84015898b933400, type: 2}
   - {fileID: 22100000, guid: 65a6569b02b354224a80e3bdedd2050c, type: 2}
   - {fileID: 22100000, guid: af6f13514e25b4abeb20c9222a174ee8, type: 2}
+  controller: {fileID: 8887359875736762428}
   cursorLockMode: 1
   moveAir: 0
-  jumpKeyCode: 32
-  runKeyCode: 304
-  attackKeyCode: 323
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  jumpHeight: 5
+  gravityScale: 2
+  smoothMoveTime: 0.2
+--- !u!143 &8887359875736762428
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447041342516451442}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.01
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
