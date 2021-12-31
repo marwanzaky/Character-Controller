@@ -37,7 +37,10 @@ namespace MarwanZaky
             DestroyObject(hit.point, dir);
 
             if (hit.collider.gameObject.layer == 8)
-                hit.collider.GetComponent<Character>().Damage(damage);
+            {
+                var character = hit.collider.GetComponent<Character>();
+                character.Damage(damage, hit.point);
+            }
         }
 
         void DestroyObject(Vector3 hitPoint, Vector3 dir)

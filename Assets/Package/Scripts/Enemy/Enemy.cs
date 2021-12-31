@@ -7,14 +7,18 @@ namespace MarwanZaky
 {
     public class Enemy : Character
     {
-        Vector3 startPos = Vector3.zero;
-        Vector3 startRot = Vector3.zero;
+        const float IN_COMA_DELAY = .3f;
+        float inComa = 0;
 
-        [Header("Enemy"), SerializeField] float visionRadius;
-        [SerializeField] string playerTag;
+        Vector3 startPos = Vector3.zero;
+
+        [Header("Enemy"), SerializeField] NavMeshAgent agent;
+        [SerializeField] Rigidbody _rigidbody;
+        [SerializeField] Collider col;
         [SerializeField] LayerMask playerMask;
-        [SerializeField] NavMeshAgent agent;
-        [SerializeField] float minY;
+        [SerializeField] bool addForceOnDamage = true;
+        [SerializeField] string playerTag;
+        [SerializeField] float visionRadius;
 
         protected override void OnEnable()
         {
@@ -37,20 +41,58 @@ namespace MarwanZaky
 
         protected override void Update()
         {
+            if (inComa > 0)
+            {
+                inComa -= Time.deltaTime;
+                return;
+            }
+
             base.Update();
 
+            InComa();
             FollowTarget();
+        }
+
+        public override void Damage(int damage, Vector3 hitPoint)
+        {
+            base.Damage(damage, hitPoint);
+
+            if (addForceOnDamage)
+            {
+                const float HIT_FORCE = 500f;
+                var hitDir = Vector3X.IgnoreY((transform.position - hitPoint).normalized);
+
+                inComa = IN_COMA_DELAY;
+                InComa();   // update
+
+                _rigidbody.AddForce(hitDir * HIT_FORCE);
+            }
         }
 
         private void FollowTarget()
         {
-            var position = Vector3X.IgnoreY(transform.position, minY);
+            var position = Vector3X.IgnoreY(transform.position, col.bounds.min.y);
             var cols = Physics.OverlapSphere(position, visionRadius, playerMask);
             var taregetCol = cols.FirstOrDefault(el => el.tag == playerTag);
 
             if (taregetCol != null)
                 agent.SetDestination(taregetCol.transform.position);
             else agent.SetDestination(startPos);
+        }
+
+        private void InComa()
+        {
+            if (inComa > 0)
+            {
+                agent.enabled = false;
+                _rigidbody.useGravity = true;
+            }
+            else
+            {
+                agent.enabled = true;
+                _rigidbody.useGravity = false;
+                _rigidbody.velocity = Vector3.zero;
+            }
         }
 
         private void Die()
@@ -60,7 +102,7 @@ namespace MarwanZaky
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawWireSphere(Vector3X.IgnoreY(transform.position, minY), visionRadius);
+            Gizmos.DrawWireSphere(Vector3X.IgnoreY(transform.position, col.bounds.min.y), visionRadius);
         }
     }
 }

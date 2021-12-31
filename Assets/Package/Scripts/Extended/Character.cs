@@ -64,7 +64,7 @@ namespace MarwanZaky
 
         }
 
-        public void Damage(int damage)
+        public virtual void Damage(int damage, Vector3 hitPoint)
         {
             healthBar.Health -= damage;
             AudioManager.Instance.Play(name: "Hurt", position: transform.position, spatialBlend: 1);
