@@ -51,6 +51,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1128898722402437841, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 215051355538083297}
     - target: {fileID: 2685470252906400776, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -62,6 +66,14 @@ PrefabInstance:
     - target: {fileID: 4165625825382959078, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_TagString
       value: Character/Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800075924436676030, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 215051355538083297}
+    - target: {fileID: 6800075924436676030, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: targetTag
+      value: Character/Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
@@ -86,6 +98,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4165625825382959078, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 5545811059662544788}
   m_PrefabAsset: {fileID: 0}
+--- !u!143 &8887359875736762428
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447041342516451442}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.01
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &215051355538083297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,21 +145,3 @@ MonoBehaviour:
   jumpHeight: 5
   gravityScale: 2
   smoothMoveTime: 0.2
---- !u!143 &8887359875736762428
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8447041342516451442}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.01
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}

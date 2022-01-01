@@ -9,17 +9,38 @@ namespace MarwanZaky
         protected const bool DEBUG = true;
 
         protected int currentController = 0;
+        protected int defaultController = 0;
 
         [Header("Character"), SerializeField] protected Animator animator;
-        [SerializeField] protected HealthBar healthBar;
+        [SerializeField] private HealthBar healthBar;
         [SerializeField] protected float walkSpeed = 5f;
         [SerializeField] protected float runSpeed = 10f;
         [SerializeField] protected AnimatorOverrideController[] controllers;
 
+        public bool IsAlive { get; set; }
+
         public Action OnAttack { get; set; }
         public Action<int> OnCurrentControllerChange { get; set; }
 
-        public float Health => healthBar.Health;
+        public float Health
+        {
+            get
+            {
+                var res = healthBar.Health;
+                return res;
+            }
+
+            set
+            {
+                if (value > 0)
+                    healthBar.Health = value;
+                else if (IsAlive)
+                {
+                    IsAlive = false;
+                    OnDie();
+                }
+            }
+        }
 
         protected float Animator_MoveX
         {
@@ -45,12 +66,15 @@ namespace MarwanZaky
 
         protected virtual void Start()
         {
-            UpdateCurrentController(0);     // select default controller
+            IsAlive = Health > 0;
+
+            UpdateCurrentController(defaultController);
         }
 
         protected virtual void Update()
         {
-            Move();
+            if (IsAlive)
+                Alive();
         }
 
         protected virtual void Attack()
@@ -59,14 +83,20 @@ namespace MarwanZaky
             OnAttack?.Invoke();
         }
 
-        protected virtual void Move()
+        protected virtual void Alive()
         {
 
         }
 
-        public virtual void Damage(int damage, Vector3 hitPoint)
+        protected virtual void OnDie()
         {
-            healthBar.Health -= damage;
+            animator.SetTrigger("Die");
+            healthBar.gameObject.SetActive(false);
+        }
+
+        public virtual void Damage(float damage, Vector3 hitPoint)
+        {
+            Health -= damage;
             AudioManager.Instance.Play(name: "Hurt", position: transform.position, spatialBlend: 1);
         }
 

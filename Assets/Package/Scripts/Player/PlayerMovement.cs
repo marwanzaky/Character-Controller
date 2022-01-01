@@ -58,10 +58,15 @@ namespace MarwanZaky
             controlls.Player.Run.started += (res) => IsRunning = true;
             controlls.Player.Run.canceled += (res) => IsRunning = false;
 
-            controlls.Player.Attack.performed += (res) => Attack();
+            controlls.Player.Attack.performed += (res) =>
+            {
+                if (IsAlive)
+                    Attack();
+            };
+
             controlls.Player.Jump.performed += (res) =>
             {
-                if (isGrounded)
+                if (isGrounded && IsAlive)
                     Jump();
             };
         }
@@ -92,18 +97,7 @@ namespace MarwanZaky
 
         protected override void Update()
         {
-            input = controlls.Player.Movement.ReadValue<Vector2>();
-
             base.Update();
-
-            IsGrounded();
-            Gravity();
-
-            if (input.magnitude > 0)
-                LookAtCamera();
-
-            Movement();
-            Inputs();
         }
 
         private void Inputs()
@@ -129,6 +123,29 @@ namespace MarwanZaky
                 OnCurrentControllerChange?.Invoke(2);
         }
 
+        protected override void Alive()
+        {
+            input = controlls.Player.Movement.ReadValue<Vector2>();
+
+            IsGrounded();
+            Gravity();
+
+            if (input.magnitude > 0)
+                LookAtCamera();
+
+            Inputs();
+            Movement();
+
+            controller.Move(velocity * Time.deltaTime);
+        }
+        protected override void OnDie()
+        {
+            GameManager.Instance.OnGameOver?.Invoke();
+            Cursor.lockState = CursorLockMode.None;
+
+            base.OnDie();
+        }
+
         private void Movement()
         {
             if (!isGrounded && moveAir == MoveAir.NotMoveable) return;
@@ -141,12 +158,6 @@ namespace MarwanZaky
 
             controller.Move(smoothMove * Speed * Time.deltaTime);
         }
-
-        protected override void Move()
-        {
-            controller.Move(velocity * Time.deltaTime);
-        }
-
         private void IsGrounded()
         {
             isGrounded = IsGroundedSphere(col, controller.radius, groundMask, true);

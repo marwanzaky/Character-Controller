@@ -51,6 +51,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1128898722402437841, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 568963236641575846}
     - target: {fileID: 2218446450011726817, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -66,6 +70,22 @@ PrefabInstance:
     - target: {fileID: 4165625825382959078, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_TagString
       value: Character/Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800075924436676030, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 568963236641575846}
+    - target: {fileID: 6800075924436676030, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: ingoreTag
+      value: Character/Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800075924436676030, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: targetTag
+      value: Character/Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800075924436676030, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: targetMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
@@ -132,12 +152,13 @@ MonoBehaviour:
   agent: {fileID: 4938000115061997318}
   _rigidbody: {fileID: 6130004539146957000}
   col: {fileID: 2038542387019381577}
+  playerTag: Character/Player
+  visionRadius: 15
+  attackDistance: 1.1
+  addForceOnDamage: 1
   playerMask:
     serializedVersion: 2
     m_Bits: 256
-  addForceOnDamage: 1
-  playerTag: Character/Player
-  visionRadius: 15
 --- !u!195 &4938000115061997318
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -152,7 +173,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 360
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
