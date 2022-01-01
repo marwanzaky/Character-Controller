@@ -1,4 +1,5 @@
 using UnityEngine;
+using MarwanZaky.Methods;
 
 namespace MarwanZaky
 {
@@ -25,12 +26,8 @@ namespace MarwanZaky
 
         void Fire()
         {
-            var aimPos = new Vector2((float)Screen.width / 2f, (float)Screen.height / 2f);
-            var ray = Camera.main.ScreenPointToRay(aimPos);
-            var hit = new RaycastHit();
+            var hit = RaycastHitX.MouseHit(layerMask);
             var targetDir = Vector3.zero;
-
-            Physics.Raycast(ray.origin, ray.direction, out hit, 1000f, layerMask);
 
             if (hit.collider != null)
                 targetDir = (hit.point - laser.position).normalized;

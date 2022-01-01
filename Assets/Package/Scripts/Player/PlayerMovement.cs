@@ -41,10 +41,11 @@ namespace MarwanZaky
         [Header("Player"), SerializeField] protected CharacterController controller;
         [SerializeField] CursorLockMode cursorLockMode = CursorLockMode.None;
         [SerializeField] MoveAir moveAir = MoveAir.Moveable;
-        [SerializeField] protected LayerMask groundMask;
-        [SerializeField] protected float jumpHeight = 8f;
-        [SerializeField] protected float gravityScale = 1f;
-        [SerializeField] protected float smoothMoveTime = .2f;
+        [SerializeField] LayerMask groundMask;
+        [SerializeField] Transform aimHead;
+        [SerializeField] float jumpHeight = 8f;
+        [SerializeField] float gravityScale = 1f;
+        [SerializeField] float smoothMoveTime = .2f;
 
         public float Speed => IsRunning ? runSpeed : walkSpeed;
         public bool IsRunning { get; set; }
@@ -133,6 +134,7 @@ namespace MarwanZaky
             if (input.magnitude > 0)
                 LookAtCamera();
 
+            AimHead();
             Inputs();
             Movement();
 
@@ -207,6 +209,16 @@ namespace MarwanZaky
             var camAngles = Vector3X.IgnoreXZ(cam.eulerAngles);
             var targetRot = Quaternion.Euler(camAngles);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime);
+        }
+
+        private void AimHead()
+        {
+            var mouseHit = RaycastHitX.MouseHit(groundMask);
+
+            if (mouseHit.collider == null) return;
+
+            if (transform.position.z < mouseHit.point.z)
+                aimHead.position = mouseHit.point;
         }
 
         private void ToggleCursorLockState() =>

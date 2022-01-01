@@ -52,6 +52,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1128898722402437841, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: aimPoint
+      value: 
+      objectReference: {fileID: 3816652434552037672}
+    - target: {fileID: 1128898722402437841, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: character
       value: 
       objectReference: {fileID: 215051355538083297}
@@ -59,6 +63,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3766926956926968701, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af73d4ddc0c3f4ec68066f2a4ff8e65e, type: 2}
     - target: {fileID: 4165625825382959078, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Name
       value: Character Player
@@ -82,9 +90,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6317918608517257350, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 5545811059662544788}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &3893502731106444117 stripped
+--- !u!4 &3816652434552037672 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8647426871384145596, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_PrefabInstance: {fileID: 5545811059662544788}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4574345605871148074 stripped
 Animator:
-  m_CorrespondingSourceObject: {fileID: 8862571541389556929, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8326587062426780606, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 5545811059662544788}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &8129983753176788254 stripped
@@ -133,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7205f56d9dbe4fdb87f1ff325993b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 3893502731106444117}
+  animator: {fileID: 4574345605871148074}
   healthBar: {fileID: 8129983753176788254}
   walkSpeed: 3
   runSpeed: 10
@@ -156,6 +169,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  aimHead: {fileID: 3816652434552037672}
   jumpHeight: 5
   gravityScale: 2
   smoothMoveTime: 0.2
