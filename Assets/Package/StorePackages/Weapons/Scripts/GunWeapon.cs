@@ -26,11 +26,11 @@ namespace MarwanZaky
 
         void Fire()
         {
-            var hit = RaycastHitX.MouseHit(layerMask);
+            var mouseHit = RaycastHitX.MouseHit(layerMask);
             var targetDir = Vector3.zero;
 
-            if (hit.collider != null)
-                targetDir = (hit.point - laser.position).normalized;
+            if (mouseHit.hit.collider != null)
+                targetDir = (mouseHit.hit.point - laser.position).normalized;
             else targetDir = Camera.main.transform.forward;
 
             Instantiate(bulletPrefab, laser.position, Quaternion.LookRotation(targetDir));

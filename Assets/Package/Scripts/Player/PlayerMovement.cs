@@ -134,9 +134,9 @@ namespace MarwanZaky
             if (input.magnitude > 0)
                 LookAtCamera();
 
-            AimHead();
             Inputs();
             Movement();
+            AimHead();
 
             controller.Move(velocity * Time.deltaTime);
         }
@@ -215,10 +215,19 @@ namespace MarwanZaky
         {
             var mouseHit = RaycastHitX.MouseHit(groundMask);
 
-            if (mouseHit.collider == null) return;
+            if (mouseHit.hit.collider == null) { return; }
 
-            if (transform.position.z < mouseHit.point.z)
-                aimHead.position = mouseHit.point;
+            var playerVector = transform.forward;
+            var mouseHitVector = mouseHit.ray.direction.normalized; mouseHitVector.y = 0; mouseHitVector = mouseHitVector.normalized;
+            var totalVector = (playerVector + mouseHitVector);
+
+            Debug.DrawRay(transform.position, playerVector);
+            Debug.DrawRay(transform.position, mouseHitVector, Color.yellow);
+            Debug.DrawRay(transform.position, totalVector, Color.green);
+
+            if (totalVector.magnitude > 1.5f)
+                aimHead.position = mouseHit.hit.point;
+            else aimHead.position = transform.position + transform.forward * 100f;
         }
 
         private void ToggleCursorLockState() =>
