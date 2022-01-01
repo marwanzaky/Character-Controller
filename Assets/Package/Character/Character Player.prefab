@@ -77,6 +77,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+--- !u!1 &1971288312863655698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6317918608517257350, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_PrefabInstance: {fileID: 5545811059662544788}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3893502731106444117 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 8862571541389556929, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
@@ -115,7 +120,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!114 &215051355538083297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,10 +137,19 @@ MonoBehaviour:
   healthBar: {fileID: 8129983753176788254}
   walkSpeed: 3
   runSpeed: 10
-  controllers:
-  - {fileID: 22100000, guid: c54fa56cc9bee4c3e84015898b933400, type: 2}
-  - {fileID: 22100000, guid: 65a6569b02b354224a80e3bdedd2050c, type: 2}
-  - {fileID: 22100000, guid: af6f13514e25b4abeb20c9222a174ee8, type: 2}
+  behavoirs:
+  - name: Movement
+    controller: {fileID: 22100000, guid: c54fa56cc9bee4c3e84015898b933400, type: 2}
+    weapon: {fileID: 0}
+    attackAudio: Push
+  - name: Sword
+    controller: {fileID: 22100000, guid: 65a6569b02b354224a80e3bdedd2050c, type: 2}
+    weapon: {fileID: 9085289629845147623}
+    attackAudio: Attack
+  - name: Gun
+    controller: {fileID: 22100000, guid: af6f13514e25b4abeb20c9222a174ee8, type: 2}
+    weapon: {fileID: 1971288312863655698}
+    attackAudio: Fire
   controller: {fileID: 8887359875736762428}
   cursorLockMode: 1
   moveAir: 0
@@ -145,3 +159,8 @@ MonoBehaviour:
   jumpHeight: 5
   gravityScale: 2
   smoothMoveTime: 0.2
+--- !u!1 &9085289629845147623 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3666988990112436339, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_PrefabInstance: {fileID: 5545811059662544788}
+  m_PrefabAsset: {fileID: 0}

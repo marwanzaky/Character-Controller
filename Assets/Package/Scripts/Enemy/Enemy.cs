@@ -26,7 +26,7 @@ namespace MarwanZaky
 
         protected override void Start()
         {
-            defaultController = 1;
+            defaultBehavoir = 1;
             startPos = transform.position;
             agent.speed = walkSpeed;
 
@@ -51,6 +51,8 @@ namespace MarwanZaky
 
             InComa();
             FollowTarget();
+
+            Animator_MoveY = agent.velocity.magnitude > 0 ? 1f : 0f;
         }
 
         public override void Damage(float damage, Vector3 hitPoint)
@@ -113,6 +115,8 @@ namespace MarwanZaky
         {
             base.OnDie();
 
+            agent.velocity = Vector3.zero;
+            agent.enabled = false;
             Destroy(gameObject, 3f);
         }
 

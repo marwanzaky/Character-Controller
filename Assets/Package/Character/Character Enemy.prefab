@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 93355256560781577, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb759f8ec417b4fd98f3ca1fd1bf565a, type: 2}
+    - target: {fileID: 259144298783238202, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb759f8ec417b4fd98f3ca1fd1bf565a, type: 2}
     - target: {fileID: 643764373649443974, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -51,11 +59,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 911360412843566815, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb759f8ec417b4fd98f3ca1fd1bf565a, type: 2}
     - target: {fileID: 1128898722402437841, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: character
       value: 
       objectReference: {fileID: 568963236641575846}
+    - target: {fileID: 1336339663751544125, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb759f8ec417b4fd98f3ca1fd1bf565a, type: 2}
     - target: {fileID: 2218446450011726817, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb759f8ec417b4fd98f3ca1fd1bf565a, type: 2}
+    - target: {fileID: 2656083490358112407, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bb759f8ec417b4fd98f3ca1fd1bf565a, type: 2}
@@ -87,8 +107,17 @@ PrefabInstance:
       propertyPath: targetMask.m_Bits
       value: 256
       objectReference: {fileID: 0}
+    - target: {fileID: 7253872590919042676, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb759f8ec417b4fd98f3ca1fd1bf565a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+--- !u!1 &1001767308823091082 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6317918608517257350, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_PrefabInstance: {fileID: 6506363971715436300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &2356810127832331213 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 8862571541389556929, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
@@ -128,7 +157,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!114 &568963236641575846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,17 +174,26 @@ MonoBehaviour:
   healthBar: {fileID: 7380858210496642438}
   walkSpeed: 5
   runSpeed: 10
-  controllers:
-  - {fileID: 22100000, guid: c54fa56cc9bee4c3e84015898b933400, type: 2}
-  - {fileID: 22100000, guid: 65a6569b02b354224a80e3bdedd2050c, type: 2}
-  - {fileID: 22100000, guid: af6f13514e25b4abeb20c9222a174ee8, type: 2}
+  behavoirs:
+  - name: Movement
+    controller: {fileID: 22100000, guid: c54fa56cc9bee4c3e84015898b933400, type: 2}
+    weapon: {fileID: 0}
+    attackAudio: Push
+  - name: Sword
+    controller: {fileID: 22100000, guid: af6f13514e25b4abeb20c9222a174ee8, type: 2}
+    weapon: {fileID: 7541555210092814207}
+    attackAudio: Sword
+  - name: Gun
+    controller: {fileID: 22100000, guid: af6f13514e25b4abeb20c9222a174ee8, type: 2}
+    weapon: {fileID: 1001767308823091082}
+    attackAudio: Fire
   agent: {fileID: 4938000115061997318}
   _rigidbody: {fileID: 6130004539146957000}
   col: {fileID: 2038542387019381577}
   playerTag: Character/Player
   visionRadius: 15
   attackDistance: 1.1
-  addForceOnDamage: 1
+  addForceOnDamage: 0
   playerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -178,7 +216,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0.9
+  m_BaseOffset: -0.2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &7380858210496642438 stripped
@@ -192,3 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978849cec94a44e5bc7f13b949de4cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7541555210092814207 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3666988990112436339, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_PrefabInstance: {fileID: 6506363971715436300}
+  m_PrefabAsset: {fileID: 0}

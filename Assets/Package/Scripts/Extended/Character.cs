@@ -1,21 +1,31 @@
 using UnityEngine;
 using MarwanZaky.Audio;
 using System;
+using System.Linq;
 
 namespace MarwanZaky
 {
     public class Character : MarwanZaky.Shared.Character
     {
+        [System.Serializable]
+        public struct Behavoir
+        {
+            public string name;
+            public AnimatorOverrideController controller;
+            public GameObject weapon;
+            public string attackAudio;
+        }
+
         protected const bool DEBUG = true;
 
-        protected int currentController = 0;
-        protected int defaultController = 0;
+        protected int currentBehavoir = 0;
+        protected int defaultBehavoir = 0;
 
         [Header("Character"), SerializeField] protected Animator animator;
         [SerializeField] private HealthBar healthBar;
         [SerializeField] protected float walkSpeed = 5f;
         [SerializeField] protected float runSpeed = 10f;
-        [SerializeField] protected AnimatorOverrideController[] controllers;
+        [SerializeField] protected Behavoir[] behavoirs;
 
         public bool IsAlive { get; set; }
 
@@ -24,12 +34,7 @@ namespace MarwanZaky
 
         public float Health
         {
-            get
-            {
-                var res = healthBar.Health;
-                return res;
-            }
-
+            get => healthBar.Health;
             set
             {
                 if (value > 0)
@@ -56,19 +61,19 @@ namespace MarwanZaky
 
         protected virtual void OnEnable()
         {
-            OnCurrentControllerChange += UpdateCurrentController;
+            OnCurrentControllerChange += UpdateCurrentBehavoir;
         }
 
         protected virtual void OnDisable()
         {
-            OnCurrentControllerChange -= UpdateCurrentController;
+            OnCurrentControllerChange -= UpdateCurrentBehavoir;
         }
 
         protected virtual void Start()
         {
             IsAlive = Health > 0;
 
-            UpdateCurrentController(defaultController);
+            UpdateCurrentBehavoir(defaultBehavoir);
         }
 
         protected virtual void Update()
@@ -102,23 +107,29 @@ namespace MarwanZaky
 
         #region Controller
 
-        protected void UseNextController()
+        protected void UseNextBehavoir()
         {
-            currentController = (currentController + 1) % controllers.Length;
-            OnCurrentControllerChange?.Invoke(currentController);
+            currentBehavoir = (currentBehavoir + 1) % behavoirs.Length;
+            OnCurrentControllerChange?.Invoke(currentBehavoir);
         }
 
-        protected void UsePreviousController()
+        protected void UsePreviousBehavoir()
         {
-            if (currentController > 0)
-                currentController--;
-            else currentController = controllers.Length - 1;
+            if (currentBehavoir > 0)
+                currentBehavoir--;
+            else currentBehavoir = behavoirs.Length - 1;
 
-            OnCurrentControllerChange?.Invoke(currentController);
+            OnCurrentControllerChange?.Invoke(currentBehavoir);
         }
 
-        protected void UpdateCurrentController(int currentController) =>
-            animator.runtimeAnimatorController = controllers[currentController];
+        protected void UpdateCurrentBehavoir(int currentBehavoir)
+        {
+            animator.runtimeAnimatorController = behavoirs[currentBehavoir].controller;
+
+            for (int i = 0; i < behavoirs.Length; i++)
+                if (behavoirs[i].weapon)
+                    behavoirs[i].weapon.SetActive(currentBehavoir == i);
+        }
 
         #endregion
 

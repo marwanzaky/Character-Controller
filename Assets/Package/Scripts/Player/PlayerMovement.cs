@@ -104,9 +104,9 @@ namespace MarwanZaky
         {
             // Scroll between controllers
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-                UseNextController();
+                UseNextBehavoir();
             else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-                UsePreviousController();
+                UsePreviousBehavoir();
 
             // Toggle cursor lock state
             if (Input.GetKeyDown(KeyCode.M))
@@ -153,8 +153,8 @@ namespace MarwanZaky
             var move = (transform.right * input.x + transform.forward * input.y).normalized;
             smoothMove = Vector3.SmoothDamp(smoothMove, move, ref smoothMoveVelocity, smoothMoveTime);
 
-            Animator_MoveX = GetAnimMoveVal(input.x);
-            Animator_MoveY = GetAnimMoveVal(input.y);
+            Animator_MoveX = GetAnimMoveVal(input.x, Animator_MoveX);
+            Animator_MoveY = GetAnimMoveVal(input.y, Animator_MoveY);
 
             controller.Move(smoothMove * Speed * Time.deltaTime);
         }
@@ -212,11 +212,13 @@ namespace MarwanZaky
         private void ToggleCursorLockState() =>
             Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
 
-        private float GetAnimMoveVal(float move)
+        private float GetAnimMoveVal(float input, float currentVal)
         {
+            const float SMOOTH_TIME = .3f;
             const float WALK_VAL = 1f;
             const float RUN_VAL = 2f;
-            return move * (IsRunning ? RUN_VAL : WALK_VAL);
+            var val = input * (IsRunning ? RUN_VAL : WALK_VAL);
+            return Mathf.Lerp(currentVal, val, SMOOTH_TIME);
         }
     }
 }
