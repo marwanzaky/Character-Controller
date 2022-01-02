@@ -855,7 +855,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2234
+  m_Name: pb_Mesh-17342
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8229,7 +8229,7 @@ PrefabInstance:
       objectReference: {fileID: 616926805}
     - target: {fileID: 1392333921646712770, guid: 762b7aae224624f7eab1653d4388d359, type: 3}
       propertyPath: m_VersionIndex
-      value: 68
+      value: 71
       objectReference: {fileID: 0}
     - target: {fileID: 1919738459300994837, guid: 762b7aae224624f7eab1653d4388d359, type: 3}
       propertyPath: m_Mesh
@@ -8289,7 +8289,7 @@ PrefabInstance:
       objectReference: {fileID: 1968829876}
     - target: {fileID: 8624503789641292754, guid: 762b7aae224624f7eab1653d4388d359, type: 3}
       propertyPath: m_Name
-      value: Box
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 762b7aae224624f7eab1653d4388d359, type: 3}
