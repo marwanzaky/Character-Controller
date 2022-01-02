@@ -1,6 +1,7 @@
 using UnityEngine;
 using MarwanZaky.Methods;
 using MarwanZaky.Audio;
+using UnityEngine.Animations.Rigging;
 
 namespace MarwanZaky
 {
@@ -43,6 +44,7 @@ namespace MarwanZaky
         [SerializeField] MoveAir moveAir = MoveAir.Moveable;
         [SerializeField] LayerMask groundMask;
         [SerializeField] Transform aimHead;
+        [SerializeField] Rig rig;
         [SerializeField] float jumpHeight = 8f;
         [SerializeField] float gravityScale = 1f;
         [SerializeField] float smoothMoveTime = .2f;
@@ -213,6 +215,9 @@ namespace MarwanZaky
 
         private void AimHead()
         {
+            const float SMOOTH_TIME = .1f;
+
+            var rigWeight = 0;
             var mouseHit = RaycastHitX.MouseHit(groundMask);
 
             if (mouseHit.hit.collider == null) { return; }
@@ -226,8 +231,12 @@ namespace MarwanZaky
             Debug.DrawRay(transform.position, totalVector, Color.green);
 
             if (totalVector.magnitude > 1.5f)
+            {
+                rigWeight = 1;
                 aimHead.position = mouseHit.hit.point;
-            else aimHead.position = transform.position + transform.forward * 100f;
+            }
+
+            rig.weight = Mathf.Lerp(rig.weight, rigWeight, SMOOTH_TIME);
         }
 
         private void ToggleCursorLockState() =>
