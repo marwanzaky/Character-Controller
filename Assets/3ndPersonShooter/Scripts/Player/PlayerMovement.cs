@@ -48,6 +48,7 @@ namespace MarwanZaky
         [SerializeField] float jumpHeight = 8f;
         [SerializeField] float gravityScale = 1f;
         [SerializeField] float smoothMoveTime = .2f;
+        [SerializeField] bool enableGUI = false;
 
         public float Speed => IsRunning ? runSpeed : walkSpeed;
         public bool IsRunning { get; set; }
@@ -191,6 +192,8 @@ namespace MarwanZaky
         {
             var buttonStyle = new GUIStyle(GUI.skin.button);
             buttonStyle.fontSize = 18;
+
+            if (!enableGUI) { return; }
 
             if (GUI.Button(new Rect(50, 32, 200, 32), $"Cursor Locked (M)", buttonStyle))
                 ToggleCursorLockState();

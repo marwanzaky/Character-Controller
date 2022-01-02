@@ -413,7 +413,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 35
   m_StepOffset: 0.3
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
@@ -452,7 +452,7 @@ MonoBehaviour:
   moveAir: 0
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   aimHead: {fileID: 1025252098939877957}
   rig: {fileID: 7512483088304481900}
   jumpHeight: 5
