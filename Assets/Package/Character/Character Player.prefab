@@ -151,6 +151,14 @@ PrefabInstance:
       propertyPath: m_Effectors.Array.data[0].m_Style.color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8108259883240739001, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 215051355538083297}
+    - target: {fileID: 8677284475389896100, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 215051355538083297}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
 --- !u!4 &1025252098939877957 stripped
@@ -163,14 +171,14 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 7641084248196650035, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 5545811059662544788}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6819914285156011493 stripped
+--- !u!1 &6350145361216948221 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1320573037091246705, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1501548368641398889, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 5545811059662544788}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7469457294380628196 stripped
+--- !u!1 &7239422365744225658 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 3125069413500299120, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2918672924018574062, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 5545811059662544788}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7512483088304481900 stripped
@@ -241,11 +249,11 @@ MonoBehaviour:
     attackAudio: Push
   - name: Sword
     controller: {fileID: 22100000, guid: 99115bf2a0f8c4bf2a356d7acf533d50, type: 2}
-    weapon: {fileID: 7469457294380628196}
+    weapon: {fileID: 6350145361216948221}
     attackAudio: Attack
   - name: Gun
     controller: {fileID: 22100000, guid: af6f13514e25b4abeb20c9222a174ee8, type: 2}
-    weapon: {fileID: 6819914285156011493}
+    weapon: {fileID: 7239422365744225658}
     attackAudio: Fire
   controller: {fileID: 8887359875736762428}
   cursorLockMode: 1
