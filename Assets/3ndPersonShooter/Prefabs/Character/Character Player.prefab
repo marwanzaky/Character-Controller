@@ -411,13 +411,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
+  m_Height: 3
   m_Radius: 0.5
   m_SlopeLimit: 35
   m_StepOffset: 0.3
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.2, z: 0}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!114 &215051355538083297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,3 +458,4 @@ MonoBehaviour:
   jumpHeight: 5
   gravityScale: 2
   smoothMoveTime: 0.2
+  enableGUI: 0
