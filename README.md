@@ -1,5 +1,7 @@
 # character-controller
 
+WARNING: the tool is UNDER DEVELOPMENT and definitely not ready to use, but feel free to experiment if you wish.
+
 Character-Controller is a starter asset tool for a 3d person shooter game.
 
 ## Features
