@@ -239,6 +239,10 @@ PrefabInstance:
       propertyPath: m_WarningMessage
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6349219535574640080, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb759f8ec417b4fd98f3ca1fd1bf565a, type: 2}
     - target: {fileID: 6540817065773192349, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -413,7 +417,7 @@ MonoBehaviour:
   col: {fileID: 2038542387019381577}
   playerTag: Character/Player
   visionRadius: 15
-  attackDistance: 1.1
+  attackDistance: 2
   addForceOnDamage: 0
   playerMask:
     serializedVersion: 2

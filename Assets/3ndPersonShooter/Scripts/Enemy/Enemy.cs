@@ -50,6 +50,7 @@ namespace MarwanZaky
             }
 
             InComa();
+
             FollowTarget();
 
             Animator_MoveY = agent.velocity.magnitude > 0 ? 1f : 0f;
@@ -77,7 +78,7 @@ namespace MarwanZaky
 
             if (nextAttackTimer > 0) { return; }
 
-            nextAttackTimer = NEXT_ATTACK_DELAY;
+            nextAttackTimer = AttackLength + NEXT_ATTACK_DELAY;
             base.Attack();
         }
 
@@ -89,7 +90,7 @@ namespace MarwanZaky
 
             if (targetCol != null)
             {
-                if (Vector3.Distance(transform.position, targetCol.transform.position) > attackDistance)
+                if (Vector3.Distance(transform.position, targetCol.transform.position) > attackDistance && !IsAttack)
                     agent.SetDestination(targetCol.transform.position);
                 else Attack();
             }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using MarwanZaky.Audio;
+using MarwanZaky.Methods;
 using System;
 using System.Linq;
 
@@ -27,7 +28,10 @@ namespace MarwanZaky
         [SerializeField] protected float runSpeed = 10f;
         [SerializeField] protected Behavoir[] behavoirs;
 
+        public float AttackLength => 2.4f;
+
         public bool IsAlive { get; set; }
+        public bool IsAttack => animator.GetCurrentAnimatorStateInfo(0).IsName("Attack");
 
         public Action OnAttack { get; set; }
         public Action<int> OnCurrentControllerChange { get; set; }
@@ -78,12 +82,15 @@ namespace MarwanZaky
 
         protected virtual void Update()
         {
-            if (IsAlive)
-                Alive();
+            if (!IsAlive) { return; }
+
+            Alive();
         }
 
         protected virtual void Attack()
         {
+            if (IsAttack) { return; }
+
             animator.SetTrigger("Attack");
             OnAttack?.Invoke();
         }

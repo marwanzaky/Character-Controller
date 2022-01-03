@@ -134,15 +134,19 @@ namespace MarwanZaky
             IsGrounded();
             Gravity();
 
-            if (input.magnitude > 0)
+            if (input.magnitude > 0 && !IsAttack)
                 LookAtCamera();
 
             Inputs();
-            Movement();
+
+            if ((isGrounded || moveAir == MoveAir.Moveable) && !IsAttack)
+                Movement();
+
             AimHead();
 
             controller.Move(velocity * Time.deltaTime);
         }
+
         protected override void OnDie()
         {
             GameManager.Instance.OnGameOver?.Invoke();
@@ -153,8 +157,6 @@ namespace MarwanZaky
 
         private void Movement()
         {
-            if (!isGrounded && moveAir == MoveAir.NotMoveable) return;
-
             var move = (transform.right * input.x + transform.forward * input.y).normalized;
             smoothMove = Vector3.SmoothDamp(smoothMove, move, ref smoothMoveVelocity, smoothMoveTime);
 

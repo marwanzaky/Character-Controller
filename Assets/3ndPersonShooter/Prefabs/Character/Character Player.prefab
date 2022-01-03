@@ -259,6 +259,10 @@ PrefabInstance:
       propertyPath: m_WarningMessage
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6349219535574640080, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af73d4ddc0c3f4ec68066f2a4ff8e65e, type: 2}
     - target: {fileID: 6540817065773192349, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Layer
       value: 8
