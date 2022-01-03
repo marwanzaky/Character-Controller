@@ -10,6 +10,7 @@ namespace MarwanZaky
         [Header("Weapon"), SerializeField] Character character;
         [SerializeField] Animator animator;
         [SerializeField] string audioName;
+
         protected bool IsAttacking => animator.GetCurrentAnimatorStateInfo(0).IsName(ATTACK_ANIM);
 
         private void OnEnable()

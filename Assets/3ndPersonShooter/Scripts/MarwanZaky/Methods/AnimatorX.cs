@@ -11,8 +11,6 @@ namespace MarwanZaky
             {
                 var clips = animator.runtimeAnimatorController.animationClips;
                 var clipName = clips.FirstOrDefault(el => el.name == name);
-                foreach (var el in clips)
-                    Debug.Log(el);
 
                 if (clipName) return clipName.length;
                 Debug.LogWarning($"The animator animation named {name} was not found");
