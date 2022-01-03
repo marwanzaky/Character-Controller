@@ -4,6 +4,7 @@
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
+Assets/TextMesh*Pro
 Assets/Screeshot*Tool
 Assets/AssetStoreTools*
 .DS_Store

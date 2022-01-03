@@ -157,15 +157,12 @@ namespace MarwanZaky
 
         private void Movement()
         {
-            Debug.Log("input" + input);
-
             var move = (transform.right * input.x + transform.forward * input.y).normalized;
             smoothMove = Vector3.SmoothDamp(smoothMove, move, ref smoothMoveVelocity, smoothMoveTime);
 
             Animator_MoveX = GetAnimMoveVal(input.x, Animator_MoveX);
             Animator_MoveY = GetAnimMoveVal(input.y, Animator_MoveY);
 
-            Debug.Log("Movement" + input.x + "," + Animator_MoveY);
             controller.Move(smoothMove * Speed * Time.deltaTime);
         }
 
