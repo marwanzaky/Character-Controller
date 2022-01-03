@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3243125957080056420, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 568963236641575846}
     - target: {fileID: 3297126861744534768, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -231,6 +235,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6349219535570361106, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6540817065773192349, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -283,6 +291,10 @@ PrefabInstance:
       propertyPath: character
       value: 
       objectReference: {fileID: 568963236641575846}
+    - target: {fileID: 8185528417350428461, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 568963236641575846}
     - target: {fileID: 8384747070104832579, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -317,14 +329,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
---- !u!95 &3477247496917850943 stripped
+--- !u!95 &168825648030929950 stripped
 Animator:
-  m_CorrespondingSourceObject: {fileID: 7641084248196650035, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6349219535570361106, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 6506363971715436300}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5664874973367342949 stripped
+--- !u!1 &3408587782813409087 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1501548368641398889, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8432571422901784627, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_PrefabInstance: {fileID: 6506363971715436300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5147213317976511980 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2100274684835257056, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 6506363971715436300}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7170989621748861162 stripped
@@ -358,7 +375,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Height: 2.8
   m_Direction: 1
   m_Center: {x: 0, y: 1.48, z: 0}
@@ -374,9 +391,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa4c8615953c4bb5b40f0e9fbe3cf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 3477247496917850943}
+  animator: {fileID: 168825648030929950}
   healthBar: {fileID: 7380858210496642438}
-  walkSpeed: 5
+  walkSpeed: 3
   runSpeed: 10
   behavoirs:
   - name: Movement
@@ -384,12 +401,12 @@ MonoBehaviour:
     weapon: {fileID: 0}
     attackAudio: Push
   - name: Sword
-    controller: {fileID: 22100000, guid: 99115bf2a0f8c4bf2a356d7acf533d50, type: 2}
-    weapon: {fileID: 5664874973367342949}
+    controller: {fileID: 22100000, guid: 56a9a7b0e50794bd2988b847808cbf05, type: 2}
+    weapon: {fileID: 5147213317976511980}
     attackAudio: Sword
   - name: Gun
-    controller: {fileID: 22100000, guid: af6f13514e25b4abeb20c9222a174ee8, type: 2}
-    weapon: {fileID: 8271434664541031906}
+    controller: {fileID: 22100000, guid: 0e6ad003c1b924845bb8c0969d7947f0, type: 2}
+    weapon: {fileID: 3408587782813409087}
     attackAudio: Fire
   agent: {fileID: 4938000115061997318}
   _rigidbody: {fileID: 6130004539146957000}
@@ -434,8 +451,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978849cec94a44e5bc7f13b949de4cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8271434664541031906 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2918672924018574062, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
-  m_PrefabInstance: {fileID: 6506363971715436300}
-  m_PrefabAsset: {fileID: 0}
