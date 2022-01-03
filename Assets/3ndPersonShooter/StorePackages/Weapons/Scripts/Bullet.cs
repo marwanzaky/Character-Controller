@@ -10,6 +10,7 @@ namespace MarwanZaky
 
         [SerializeField] float speed = 30f;
         [SerializeField] GameObject destroyPrefab;
+        [SerializeField] string targetTag;
         [SerializeField] LayerMask layerMask;
         [SerializeField] int damage = 10;
 
@@ -36,11 +37,16 @@ namespace MarwanZaky
         {
             DestroyObject(hit.point, dir);
 
-            if (hit.collider.gameObject.layer == 8)
+            // Character
+            if (hit.collider.gameObject.layer == 8 && hit.collider.CompareTag(targetTag))
             {
                 var character = hit.collider.GetComponent<Character>();
                 character.Damage(damage, hit.point);
             }
+
+            // Obstacle
+            else if (hit.collider.gameObject.layer == 9)
+                hit.collider.GetComponent<Rigidbody>().AddForceAtPosition(dir * 500f, hit.point);
         }
 
         void DestroyObject(Vector3 hitPoint, Vector3 dir)

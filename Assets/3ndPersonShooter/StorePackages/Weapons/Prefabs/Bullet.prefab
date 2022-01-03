@@ -47,11 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 3
-  speed: 70
+  speed: 100
   destroyPrefab: {fileID: 6666361919546285360, guid: e1bda493e5280496c98264ba42f1361c, type: 3}
+  targetTag: Character/Enemy
   layerMask:
     serializedVersion: 2
-    m_Bits: 321
+    m_Bits: 833
   damage: 25
 --- !u!1 &5870104128109794672
 GameObject:
@@ -130,7 +131,7 @@ TrailRenderer:
   m_Time: 0.1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.2
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -157,8 +158,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.25, b: 0.25, a: 0.5019608}
-      key1: {r: 1, g: 0.2509804, b: 0.2509804, a: 0}
+      key0: {r: 0.94509804, g: 0.76862746, b: 0.05882353, a: 1}
+      key1: {r: 0.94509804, g: 0.76862746, b: 0.05882353, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -173,7 +174,7 @@ TrailRenderer:
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 578
+      atime0: 0
       atime1: 65535
       atime2: 0
       atime3: 0
@@ -220,7 +221,7 @@ Transform:
   m_GameObject: {fileID: 8301156206293041769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7472346635008777023}
