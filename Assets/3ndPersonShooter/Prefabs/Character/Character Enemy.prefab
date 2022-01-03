@@ -267,6 +267,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4817606234829607543, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Drag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817606234829607543, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     - target: {fileID: 4937427077843149241, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -347,10 +355,6 @@ PrefabInstance:
       propertyPath: _collider
       value: 
       objectReference: {fileID: 2038542387019381577}
-    - target: {fileID: 7368581006047757911, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
-      propertyPath: _rigidbody
-      value: 
-      objectReference: {fileID: 6130004539146957000}
     - target: {fileID: 7428881755806196514, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -438,6 +442,11 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 6349219535570361106, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 6506363971715436300}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &1770104696863087995 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 4817606234829607543, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+  m_PrefabInstance: {fileID: 6506363971715436300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3408587782813409087 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8432571422901784627, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
@@ -464,22 +473,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4165625825382959078, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 6506363971715436300}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &6130004539146957000
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7170989621748861162}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 2
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
 --- !u!136 &2038542387019381577
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -525,7 +518,7 @@ MonoBehaviour:
     weapon: {fileID: 3408587782813409087}
     attackAudio: Fire
   agent: {fileID: 4938000115061997318}
-  _rigidbody: {fileID: 6130004539146957000}
+  _rigidbody: {fileID: 1770104696863087995}
   col: {fileID: 2038542387019381577}
   playerTag: Character/Player
   visionRadius: 15

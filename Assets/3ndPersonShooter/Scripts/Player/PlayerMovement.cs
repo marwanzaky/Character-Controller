@@ -256,5 +256,11 @@ namespace MarwanZaky
             var val = input * (IsRunning ? RUN_VAL : WALK_VAL);
             return Mathf.Lerp(currentVal, val, SMOOTH_TIME);
         }
+
+        private void OnTriggerEnter(Collider col)
+        {
+            if (col.gameObject.layer == LayerMask.NameToLayer("Collectable"))
+                col.GetComponent<ICollect>().Collect();
+        }
     }
 }
