@@ -24,6 +24,7 @@ namespace MarwanZaky
 
         [Header("Character"), SerializeField] protected Animator animator;
         [SerializeField] private HealthBar healthBar;
+        [SerializeField] Ragdoll ragdoll;
         [SerializeField] protected float walkSpeed = 5f;
         [SerializeField] protected float runSpeed = 10f;
         [SerializeField] protected Behavoir[] behavoirs;
@@ -102,7 +103,7 @@ namespace MarwanZaky
 
         protected virtual void OnDie()
         {
-            animator.SetTrigger("Die");
+            ragdoll.Die();
             healthBar.gameObject.SetActive(false);
         }
 

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1386836716305189617}
-  - component: {fileID: 3939152486376294321}
   - component: {fileID: 5977746913317515571}
   m_Layer: 0
   m_Name: Gun
@@ -34,26 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3939152486376294321
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788798220591080292}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 99cd9ce61388d423889ab518a934a4e5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &5977746913317515571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  animator: {fileID: 3939152486376294321}
+  animator: {fileID: 0}
   audioName: Fire
   bulletPrefab: {fileID: 4038925005956120593, guid: 3cfd7ecddbc844ea5ac13d6e348c3396, type: 3}
   laser: {fileID: 6593476247805697170}

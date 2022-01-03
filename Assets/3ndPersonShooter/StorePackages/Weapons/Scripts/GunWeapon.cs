@@ -20,7 +20,7 @@ namespace MarwanZaky
         {
             base.Attack();
 
-            if (!IsAttacking)
+            if (!character.IsAttack)
                 Fire();
         }
 

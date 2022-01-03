@@ -162,6 +162,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 643764373649443974}
     m_Modifications:
+    - target: {fileID: 1302283118476395480, guid: 753b588642b8d44af8c93623fcbeab7d, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 6349219535570361106}
+    - target: {fileID: 1302283118476395480, guid: 753b588642b8d44af8c93623fcbeab7d, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3191965259700759781, guid: 753b588642b8d44af8c93623fcbeab7d, type: 3}
       propertyPath: m_Name
       value: Model
@@ -215,5 +223,10 @@ PrefabInstance:
 --- !u!4 &6349219535562912906 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3191965259701055749, guid: 753b588642b8d44af8c93623fcbeab7d, type: 3}
+  m_PrefabInstance: {fileID: 8381435279087289743}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6349219535570361106 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3191965259691237021, guid: 753b588642b8d44af8c93623fcbeab7d, type: 3}
   m_PrefabInstance: {fileID: 8381435279087289743}
   m_PrefabAsset: {fileID: 0}

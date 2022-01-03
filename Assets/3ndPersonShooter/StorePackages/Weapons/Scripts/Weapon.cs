@@ -7,11 +7,8 @@ namespace MarwanZaky
     {
         const string ATTACK_ANIM = "Attack";
 
-        [Header("Weapon"), SerializeField] Character character;
-        [SerializeField] Animator animator;
-        [SerializeField] string audioName;
-
-        protected bool IsAttacking => animator.GetCurrentAnimatorStateInfo(0).IsName(ATTACK_ANIM);
+        [Header("Weapon"), SerializeField] protected Character character;
+        [SerializeField] protected string audioName;
 
         private void OnEnable()
         {
@@ -23,14 +20,23 @@ namespace MarwanZaky
             character.OnAttack -= Attack;
         }
 
+        protected virtual void Update()
+        {
+            if (character.IsAttack)
+                OnAttackUpdate();
+        }
+
         protected virtual void Attack()
         {
-            if (IsAttacking) return;
-
-            animator.SetTrigger(ATTACK_ANIM);
+            if (character.IsAttack) return;
 
             if (!string.IsNullOrEmpty(audioName))
                 AudioManager.Instance.Play(audioName);
+        }
+
+        protected virtual void OnAttackUpdate()
+        {
+
         }
     }
 }

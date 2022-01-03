@@ -118,7 +118,7 @@ namespace MarwanZaky
 
             agent.velocity = Vector3.zero;
             agent.enabled = false;
-            Destroy(gameObject, 3f);
+            Destroy(gameObject, 10f);
         }
 
         private void OnDrawGizmosSelected()
