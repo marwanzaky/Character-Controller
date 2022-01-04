@@ -135,7 +135,7 @@ MonoBehaviour:
   right: {fileID: 8667847681054685085}
   left: {fileID: 2729375222861061663}
   point: {fileID: 1968549600743970524}
-  focus: 30
+  focus: 25
   size: 0.2
 --- !u!1001 &107717137140403616
 PrefabInstance:

@@ -26,14 +26,12 @@ namespace MarwanZaky
 
         const float GRAVITY = -9.81f;
 
-        Vector3 velocity = Vector3.zero;
-
         bool isGrounded = false;
         bool wasGrounded = false;
 
         Transform cam;
 
-        Vector3 input;
+        Vector3 velocity;
         Vector3 smoothMove;
         Vector3 smoothMoveVelocity;
 
@@ -50,7 +48,11 @@ namespace MarwanZaky
         [SerializeField] float smoothMoveTime = .2f;
         [SerializeField] bool enableGUI = false;
 
+        public Vector3 MoveVelocity { get; private set; }
+        public Vector3 _Input { get; private set; }
+
         public float Speed => IsRunning ? runSpeed : walkSpeed;
+
         public bool IsRunning { get; set; }
 
         private void Awake()
@@ -129,12 +131,12 @@ namespace MarwanZaky
 
         protected override void Alive()
         {
-            input = controlls.Player.Movement.ReadValue<Vector2>();
+            _Input = controlls.Player.Movement.ReadValue<Vector2>();
 
             IsGrounded();
             Gravity();
 
-            if (input.magnitude > 0 && !IsAttack)
+            if (_Input.magnitude > 0 && !IsAttack)
                 LookAtCamera();
 
             Inputs();
@@ -157,13 +159,15 @@ namespace MarwanZaky
 
         private void Movement()
         {
-            var move = (transform.right * input.x + transform.forward * input.y).normalized;
+            var move = (transform.right * _Input.x + transform.forward * _Input.y).normalized;
+
             smoothMove = Vector3.SmoothDamp(smoothMove, move, ref smoothMoveVelocity, smoothMoveTime);
+            MoveVelocity = smoothMove * Speed;
 
-            Animator_MoveX = GetAnimMoveVal(input.x, Animator_MoveX);
-            Animator_MoveY = GetAnimMoveVal(input.y, Animator_MoveY);
+            Animator_MoveX = GetAnimMoveVal(_Input.x, Animator_MoveX);
+            Animator_MoveY = GetAnimMoveVal(_Input.y, Animator_MoveY);
 
-            controller.Move(smoothMove * Speed * Time.deltaTime);
+            controller.Move(MoveVelocity * Time.deltaTime);
         }
 
         private void IsGrounded()
