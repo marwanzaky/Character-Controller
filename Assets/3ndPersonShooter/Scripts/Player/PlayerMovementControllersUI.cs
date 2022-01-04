@@ -5,12 +5,11 @@ namespace MarwanZaky
 {
     public class PlayerMovementControllersUI : MonoBehaviour
     {
-        [SerializeField] List<GameObject> controllers;
+        [SerializeField] List<PlayerMovementControllerUI> controllers;
 
         private void Start()
         {
-            // GetAllControllers();
-
+            CurrentController(PlayerMovement.Instance.DefaultBehavoir);
             PlayerMovement.Instance.OnCurrentControllerChange += CurrentController;
         }
 
@@ -21,20 +20,14 @@ namespace MarwanZaky
 
         public void CurrentController(int controller)
         {
-            DisableAllControllers();
-            controllers[controller].SetActive(true);
+            UnselectAllControllers();
+            controllers[controller].Select();
         }
 
-        void DisableAllControllers()
+        void UnselectAllControllers()
         {
             for (int i = 0; i < controllers.Count; i++)
-                controllers[i].SetActive(false);
-        }
-
-        void GetAllControllers()
-        {
-            foreach (Transform el in transform)
-                controllers.Add(el.gameObject);
+                controllers[i].Unselect();
         }
     }
 }

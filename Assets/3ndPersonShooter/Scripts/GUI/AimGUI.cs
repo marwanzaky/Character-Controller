@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace MarwanZaky
 {
-    [ExecuteAlways]
     public class AimGUI : MonoBehaviour
     {
         [SerializeField] RectTransform top;

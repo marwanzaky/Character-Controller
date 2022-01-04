@@ -29,6 +29,8 @@ namespace MarwanZaky
         [SerializeField] protected float runSpeed = 10f;
         [SerializeField] protected Behavoir[] behavoirs;
 
+        public int DefaultBehavoir => defaultBehavoir;
+
         public float AttackLength => 2.4f;
 
         public bool IsAlive { get; set; }
