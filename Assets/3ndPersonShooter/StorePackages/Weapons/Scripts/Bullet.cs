@@ -38,15 +38,15 @@ namespace MarwanZaky
             DestroyObject(hit.point, dir);
 
             // Character
-            if (hit.collider.gameObject.layer == 8 && hit.collider.CompareTag(targetTag))
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Character") && hit.collider.CompareTag(targetTag))
             {
                 var character = hit.collider.GetComponent<Character>();
                 character.Damage(damage, hit.point);
             }
 
             // Obstacle
-            else if (hit.collider.gameObject.layer == 9)
-                hit.collider.GetComponent<Rigidbody>().AddForceAtPosition(dir * 500f, hit.point);
+            else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+                hit.collider.GetComponent<Destroy>().Invoke();
         }
 
         void DestroyObject(Vector3 hitPoint, Vector3 dir)
