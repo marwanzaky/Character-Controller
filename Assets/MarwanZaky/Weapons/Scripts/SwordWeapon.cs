@@ -7,11 +7,6 @@ namespace MarwanZaky
         [Header("Sword"), SerializeField] float damage = 10;
         [SerializeField] string targetTag;
 
-        protected override void Attack()
-        {
-            base.Attack();
-        }
-
         private void OnTriggerEnter(Collider col)
         {
             if (character.IsAttack && col.CompareTag(targetTag))

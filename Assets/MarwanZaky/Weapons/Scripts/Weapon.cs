@@ -1,5 +1,6 @@
 using UnityEngine;
 using MarwanZaky.Audio;
+using System.Collections;
 
 namespace MarwanZaky
 {
@@ -26,9 +27,14 @@ namespace MarwanZaky
                 OnAttackUpdate();
         }
 
-        protected virtual void Attack()
+        private void Attack()
         {
-            if (character.IsAttack) return;
+            StartCoroutine(AttackIE());
+        }
+
+        protected virtual IEnumerator AttackIE()
+        {
+            if (character.IsAttack) yield break;
 
             if (!string.IsNullOrEmpty(audioName))
                 AudioManager.Instance.Play(audioName);

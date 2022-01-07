@@ -1,5 +1,6 @@
 using UnityEngine;
 using MarwanZaky.Methods;
+using System.Collections;
 
 namespace MarwanZaky
 {
@@ -16,12 +17,14 @@ namespace MarwanZaky
             cam = Camera.main;
         }
 
-        protected override void Attack()
+        protected override IEnumerator AttackIE()
         {
-            base.Attack();
+            StartCoroutine(base.AttackIE());
 
-            if (!character.IsAttack)
-                Fire();
+            if (character.IsAttack) yield break;
+
+            yield return new WaitForEndOfFrame();
+            Fire();
         }
 
         void Fire()
