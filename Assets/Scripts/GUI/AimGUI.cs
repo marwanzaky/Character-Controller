@@ -16,7 +16,7 @@ namespace MarwanZaky
         private void Update()
         {
             const float VELOCITY_UNIT = .1f;
-            var strength = PlayerMovement.Instance.MoveVelocity.magnitude * VELOCITY_UNIT + 1f;
+            var strength = PlayerMovement.Instance.SmoothMove.magnitude * VELOCITY_UNIT + 1f;
 
             top.anchoredPosition = new Vector2(0f, focus * strength);
             bottom.anchoredPosition = new Vector2(0f, -focus * strength);

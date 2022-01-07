@@ -33,7 +33,10 @@ namespace MarwanZaky
 
         Vector3 velocity;
         Vector3 smoothMove;
-        Vector3 smoothMoveVelocity;
+        Vector3 smoothMoveVel;
+
+        float smoothAnimValVelX;    // smooth animation value velocity x-axis
+        float smoothAnimValVelY;    // smooth animation value velcoity y-axis
 
         Collider col;
 
@@ -48,7 +51,7 @@ namespace MarwanZaky
         [SerializeField] float smoothMoveTime = .2f;
         [SerializeField] bool enableGUI = false;
 
-        public Vector3 MoveVelocity { get; private set; }
+        public Vector3 SmoothMove => smoothMove;
         public Vector3 _Input { get; private set; }
 
         public float Speed => IsRunning ? runSpeed : walkSpeed;
@@ -161,13 +164,12 @@ namespace MarwanZaky
         {
             var move = (transform.right * _Input.x + transform.forward * _Input.y).normalized;
 
-            smoothMove = Vector3.SmoothDamp(smoothMove, move, ref smoothMoveVelocity, smoothMoveTime);
-            MoveVelocity = smoothMove * Speed;
+            smoothMove = Vector3.SmoothDamp(smoothMove, move * Speed, ref smoothMoveVel, smoothMoveTime);
 
-            Animator_MoveX = GetAnimMoveVal(_Input.x, Animator_MoveX);
-            Animator_MoveY = GetAnimMoveVal(_Input.y, Animator_MoveY);
+            Animator_MoveX = GetAnimMoveVal(_Input.x, Animator_MoveX, ref smoothAnimValVelX);
+            Animator_MoveY = GetAnimMoveVal(_Input.y, Animator_MoveY, ref smoothAnimValVelY);
 
-            controller.Move(MoveVelocity * Time.deltaTime);
+            controller.Move(smoothMove * Time.deltaTime);
         }
 
         private void IsGrounded()
@@ -252,13 +254,13 @@ namespace MarwanZaky
         private void ToggleCursorLockState() =>
             Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
 
-        private float GetAnimMoveVal(float input, float currentVal)
+        private float GetAnimMoveVal(float input, float currentVal, ref float smoothVal)
         {
-            const float SMOOTH_TIME = .3f;
             const float WALK_VAL = 1f;
             const float RUN_VAL = 2f;
-            var val = input * (IsRunning ? RUN_VAL : WALK_VAL);
-            return Mathf.Lerp(currentVal, val, SMOOTH_TIME);
+
+            var targetVal = input * (IsRunning ? RUN_VAL : WALK_VAL);
+            return Mathf.SmoothDamp(currentVal, targetVal, ref smoothVal, smoothMoveTime);
         }
 
         private void OnTriggerEnter(Collider col)
