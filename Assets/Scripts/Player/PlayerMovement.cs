@@ -152,6 +152,15 @@ namespace MarwanZaky
             controller.Move(velocity * Time.deltaTime);
         }
 
+        protected override void Attack()
+        {
+            if (IsAttack) { return; }
+
+            LookAtCamera(smoothTime: false);
+
+            base.Attack();
+        }
+
         protected override void OnDie()
         {
             GameManager.Instance.OnGameOver?.Invoke();
@@ -197,12 +206,14 @@ namespace MarwanZaky
             AudioManager.Instance.Play("Jump");
         }
 
-        private void LookAtCamera()
+        private void LookAtCamera(bool smoothTime = true)
         {
             const float SMOOTH_TIME = 5f;
+
             var camAngles = Vector3X.IgnoreXZ(cam.eulerAngles);
             var targetRot = Quaternion.Euler(camAngles);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime);
+
+            transform.rotation = smoothTime ? Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime) : targetRot;
         }
 
         private void AimHead()
