@@ -197,6 +197,49 @@ namespace MarwanZaky
             AudioManager.Instance.Play("Jump");
         }
 
+        private void LookAtCamera()
+        {
+            const float SMOOTH_TIME = 5f;
+            var camAngles = Vector3X.IgnoreXZ(cam.eulerAngles);
+            var targetRot = Quaternion.Euler(camAngles);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime);
+        }
+
+        private void AimHead()
+        {
+            const float SMOOTH_TIME = .1f;
+            const float MIN_VECTOR_AIM_MEAD = 1.5f;
+
+            var rigWeight = 0;
+            var mouseHit = RaycastHitX.MouseHit(groundMask);
+
+            if (mouseHit.hit.collider == null) { return; }
+
+            var playerVector = transform.forward;
+            var mouseHitVector = mouseHit.ray.direction.normalized; mouseHitVector.y = 0; mouseHitVector = mouseHitVector.normalized;
+            var totalVector = (playerVector + mouseHitVector);
+
+            Debug.DrawRay(transform.position, playerVector);
+            Debug.DrawRay(transform.position, mouseHitVector, Color.yellow);
+            Debug.DrawRay(transform.position, totalVector, Color.green);
+
+            if (totalVector.magnitude > MIN_VECTOR_AIM_MEAD)
+            {
+                rigWeight = 1;
+                aimHead.position = mouseHit.hit.point;
+            }
+
+            rig.weight = Mathf.Lerp(rig.weight, rigWeight, SMOOTH_TIME);
+        }
+
+        private void OnTriggerEnter(Collider col)
+        {
+            if (col.gameObject.layer == LayerMask.NameToLayer("Collectable"))
+                col.GetComponent<ICollect>().Collect();
+        }
+
+        #region On GUI
+
         private void OnGUI()
         {
             var buttonStyle = new GUIStyle(GUI.skin.button);
@@ -217,56 +260,20 @@ namespace MarwanZaky
                 OnCurrentControllerChange?.Invoke(2);
         }
 
-        private void LookAtCamera()
+        private void ToggleCursorLockState()
         {
-            const float SMOOTH_TIME = 5f;
-            var camAngles = Vector3X.IgnoreXZ(cam.eulerAngles);
-            var targetRot = Quaternion.Euler(camAngles);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime);
-        }
-
-        private void AimHead()
-        {
-            const float SMOOTH_TIME = .1f;
-
-            var rigWeight = 0;
-            var mouseHit = RaycastHitX.MouseHit(groundMask);
-
-            if (mouseHit.hit.collider == null) { return; }
-
-            var playerVector = transform.forward;
-            var mouseHitVector = mouseHit.ray.direction.normalized; mouseHitVector.y = 0; mouseHitVector = mouseHitVector.normalized;
-            var totalVector = (playerVector + mouseHitVector);
-
-            Debug.DrawRay(transform.position, playerVector);
-            Debug.DrawRay(transform.position, mouseHitVector, Color.yellow);
-            Debug.DrawRay(transform.position, totalVector, Color.green);
-
-            if (totalVector.magnitude > 1.5f)
-            {
-                rigWeight = 1;
-                aimHead.position = mouseHit.hit.point;
-            }
-
-            rig.weight = Mathf.Lerp(rig.weight, rigWeight, SMOOTH_TIME);
-        }
-
-        private void ToggleCursorLockState() =>
             Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
+        }
 
-        private float GetAnimMoveVal(float input, float currentVal, ref float smoothVal)
+        #endregion
+
+        float GetAnimMoveVal(float input, float currentVal, ref float smoothVal)
         {
             const float WALK_VAL = 1f;
             const float RUN_VAL = 2f;
 
             var targetVal = input * (IsRunning ? RUN_VAL : WALK_VAL);
             return Mathf.SmoothDamp(currentVal, targetVal, ref smoothVal, smoothMoveTime);
-        }
-
-        private void OnTriggerEnter(Collider col)
-        {
-            if (col.gameObject.layer == LayerMask.NameToLayer("Collectable"))
-                col.GetComponent<ICollect>().Collect();
         }
     }
 }

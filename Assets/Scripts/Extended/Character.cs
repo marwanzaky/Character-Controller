@@ -115,7 +115,7 @@ namespace MarwanZaky
             AudioManager.Instance.Play(name: "Hurt", position: transform.position, spatialBlend: 1);
         }
 
-        #region Controller
+        #region Behavoir
 
         protected void UseNextBehavoir()
         {
