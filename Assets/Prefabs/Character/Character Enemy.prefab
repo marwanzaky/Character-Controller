@@ -495,32 +495,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 168825648030929950}
-  movementAnimatorOverrideController: {fileID: 22100000, guid: 0f9433a1b7ffd4424bd43a694d284568, type: 2}
   healthBar: {fileID: 7380858210496642438}
   ragdoll: {fileID: 4326071299191687515}
-  walkSpeed: 5
+  walkSpeed: 3
   runSpeed: 10
   behavoirs:
   - name: Movement
-    upperbodyIdleClip: {fileID: 0}
-    attackClip: {fileID: 0}
+    controller: {fileID: 22100000, guid: 0f9433a1b7ffd4424bd43a694d284568, type: 2}
     weapon: {fileID: 0}
     attackAudio: Push
   - name: Sword
-    upperbodyIdleClip: {fileID: 0}
-    attackClip: {fileID: 0}
+    controller: {fileID: 22100000, guid: 672eb8504242b43b48f0aa14aba328f8, type: 2}
     weapon: {fileID: 5147213317976511980}
     attackAudio: Sword
   - name: Gun
-    upperbodyIdleClip: {fileID: -203655887218126122, guid: ac0ecdaf41ab64041926bff19c08c5af, type: 3}
-    attackClip: {fileID: 0}
+    controller: {fileID: 22100000, guid: 354c16d1d05a640ccbb26808ba06c81d, type: 2}
     weapon: {fileID: 3408587782813409087}
     attackAudio: Fire
   agent: {fileID: 4938000115061997318}
   col: {fileID: 2038542387019381577}
-  visionRadius: 7
+  visionRadius: 15
   attackDistance: 1.75
-  targetTag: Characater/Player
+  targetTag: Character/Player
   targetMask:
     serializedVersion: 2
     m_Bits: 256

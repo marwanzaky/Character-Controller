@@ -13,8 +13,7 @@ namespace MarwanZaky
         public struct Behavoir
         {
             public string name;
-            public AnimationClip upperbodyIdleClip;
-            public AnimationClip attackClip;
+            public AnimatorOverrideController controller;
             public GameObject weapon;
             public string attackAudio;
         }
@@ -25,10 +24,9 @@ namespace MarwanZaky
         protected int defaultBehavoir = 0;
 
         [Header("Character"), SerializeField] protected Animator animator;
-        [SerializeField] AnimatorOverrideController movementAnimatorOverrideController;
         [SerializeField] private HealthBar healthBar;
         [SerializeField] Ragdoll ragdoll;
-        [SerializeField] protected float walkSpeed = 5f;
+        [SerializeField] protected float walkSpeed = 3f;
         [SerializeField] protected float runSpeed = 10f;
         [SerializeField] protected Behavoir[] behavoirs;
 
@@ -137,16 +135,11 @@ namespace MarwanZaky
 
         protected void UpdateCurrentBehavoir(int currentBehavoir)
         {
-            Debug.Log("seriously!", this);
+            animator.runtimeAnimatorController = behavoirs[currentBehavoir].controller;
 
             for (int i = 0; i < behavoirs.Length; i++)
                 if (behavoirs[i].weapon)
                     behavoirs[i].weapon.SetActive(currentBehavoir == i);
-
-            var animatorOverrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
-            animatorOverrideController["Dummy Upperbody Idle"] = behavoirs[currentBehavoir].upperbodyIdleClip;
-            animatorOverrideController["Dummy Attack"] = behavoirs[currentBehavoir].attackClip;
-            animator.runtimeAnimatorController = animatorOverrideController;
         }
 
         #endregion
