@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41298
+  m_Name: pb_Mesh34046
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2176,7 +2176,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41322
+  m_Name: pb_Mesh34070
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2453,7 +2453,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-10534
+  m_Name: pb_Mesh-2888
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4500,14 +4500,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 215051355538083297, guid: 6815a9deb37b04e57a9a170db9f70e77, type: 3}
-      propertyPath: smoothMoveTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507114064461563014, guid: 6815a9deb37b04e57a9a170db9f70e77, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: 0e6ad003c1b924845bb8c0969d7947f0, type: 2}
     - target: {fileID: 1507114064461563014, guid: 6815a9deb37b04e57a9a170db9f70e77, type: 3}
       propertyPath: m_WarningMessage
       value: 
@@ -4605,7 +4597,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41350
+  m_Name: pb_Mesh34098
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8435,7 +8427,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41374
+  m_Name: pb_Mesh34122
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9328,7 +9320,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41406
+  m_Name: pb_Mesh34154
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

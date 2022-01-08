@@ -94,7 +94,7 @@ PrefabInstance:
     - target: {fileID: 1128898722402437841, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 568963236641575846}
+      objectReference: {fileID: 0}
     - target: {fileID: 1286404252953502409, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -206,7 +206,7 @@ PrefabInstance:
     - target: {fileID: 3243125957080056420, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 568963236641575846}
+      objectReference: {fileID: 1078180100633024308}
     - target: {fileID: 3297126861744534768, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -326,7 +326,7 @@ PrefabInstance:
     - target: {fileID: 6800075924436676030, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 568963236641575846}
+      objectReference: {fileID: 0}
     - target: {fileID: 6800075924436676030, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: ingoreTag
       value: Character/Enemy
@@ -382,11 +382,11 @@ PrefabInstance:
     - target: {fileID: 8108259883240739001, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 568963236641575846}
+      objectReference: {fileID: 0}
     - target: {fileID: 8185528417350428461, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 568963236641575846}
+      objectReference: {fileID: 1078180100633024308}
     - target: {fileID: 8185528417350428461, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: targetTag
       value: Character/Player
@@ -414,7 +414,7 @@ PrefabInstance:
     - target: {fileID: 8677284475389896100, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 568963236641575846}
+      objectReference: {fileID: 0}
     - target: {fileID: 8677284475389896100, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: targetTag
       value: Character/Player
@@ -440,11 +440,6 @@ PrefabInstance:
 --- !u!95 &168825648030929950 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6349219535570361106, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
-  m_PrefabInstance: {fileID: 6506363971715436300}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &1770104696863087995 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 4817606234829607543, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
   m_PrefabInstance: {fileID: 6506363971715436300}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3408587782813409087 stripped
@@ -487,7 +482,7 @@ CapsuleCollider:
   m_Height: 2.8
   m_Direction: 1
   m_Center: {x: 0, y: 1.48, z: 0}
---- !u!114 &568963236641575846
+--- !u!114 &1078180100633024308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -500,31 +495,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 168825648030929950}
+  movementAnimatorOverrideController: {fileID: 22100000, guid: 0f9433a1b7ffd4424bd43a694d284568, type: 2}
   healthBar: {fileID: 7380858210496642438}
   ragdoll: {fileID: 4326071299191687515}
-  walkSpeed: 3
+  walkSpeed: 5
   runSpeed: 10
   behavoirs:
   - name: Movement
-    controller: {fileID: 22100000, guid: 0f9433a1b7ffd4424bd43a694d284568, type: 2}
+    upperbodyIdleClip: {fileID: 0}
+    attackClip: {fileID: 0}
     weapon: {fileID: 0}
     attackAudio: Push
   - name: Sword
-    controller: {fileID: 22100000, guid: 56a9a7b0e50794bd2988b847808cbf05, type: 2}
+    upperbodyIdleClip: {fileID: 0}
+    attackClip: {fileID: 0}
     weapon: {fileID: 5147213317976511980}
     attackAudio: Sword
   - name: Gun
-    controller: {fileID: 22100000, guid: 0e6ad003c1b924845bb8c0969d7947f0, type: 2}
+    upperbodyIdleClip: {fileID: -203655887218126122, guid: ac0ecdaf41ab64041926bff19c08c5af, type: 3}
+    attackClip: {fileID: 0}
     weapon: {fileID: 3408587782813409087}
     attackAudio: Fire
   agent: {fileID: 4938000115061997318}
-  _rigidbody: {fileID: 1770104696863087995}
   col: {fileID: 2038542387019381577}
-  playerTag: Character/Player
-  visionRadius: 15
-  attackDistance: 1.5
-  addForceOnDamage: 0
-  playerMask:
+  visionRadius: 7
+  attackDistance: 1.75
+  targetTag: Characater/Player
+  targetMask:
     serializedVersion: 2
     m_Bits: 256
 --- !u!195 &4938000115061997318

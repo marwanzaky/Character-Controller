@@ -1,6 +1,7 @@
 using UnityEngine;
 using MarwanZaky.Audio;
 using MarwanZaky.Methods;
+using System.Collections.Generic;
 using System;
 using System.Linq;
 
@@ -12,7 +13,8 @@ namespace MarwanZaky
         public struct Behavoir
         {
             public string name;
-            public AnimatorOverrideController controller;
+            public AnimationClip upperbodyIdleClip;
+            public AnimationClip attackClip;
             public GameObject weapon;
             public string attackAudio;
         }
@@ -23,6 +25,7 @@ namespace MarwanZaky
         protected int defaultBehavoir = 0;
 
         [Header("Character"), SerializeField] protected Animator animator;
+        [SerializeField] AnimatorOverrideController movementAnimatorOverrideController;
         [SerializeField] private HealthBar healthBar;
         [SerializeField] Ragdoll ragdoll;
         [SerializeField] protected float walkSpeed = 5f;
@@ -31,13 +34,13 @@ namespace MarwanZaky
 
         public int DefaultBehavoir => defaultBehavoir;
 
-        public float AttackLength => 2.4f;
-
         public bool IsAlive { get; set; }
-        public bool IsAttack => animator.GetCurrentAnimatorStateInfo(0).IsName("Attack");
+        public bool IsAttack => animator.GetCurrentAnimatorStateInfo(layerIndex: 2).IsName("Attack");
 
         public Action OnAttack { get; set; }
         public Action<int> OnCurrentControllerChange { get; set; }
+
+        public float AttackLength => 2.4f;
 
         public float Health
         {
@@ -134,11 +137,16 @@ namespace MarwanZaky
 
         protected void UpdateCurrentBehavoir(int currentBehavoir)
         {
-            animator.runtimeAnimatorController = behavoirs[currentBehavoir].controller;
+            Debug.Log("seriously!", this);
 
             for (int i = 0; i < behavoirs.Length; i++)
                 if (behavoirs[i].weapon)
                     behavoirs[i].weapon.SetActive(currentBehavoir == i);
+
+            var animatorOverrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
+            animatorOverrideController["Dummy Upperbody Idle"] = behavoirs[currentBehavoir].upperbodyIdleClip;
+            animatorOverrideController["Dummy Attack"] = behavoirs[currentBehavoir].attackClip;
+            animator.runtimeAnimatorController = animatorOverrideController;
         }
 
         #endregion

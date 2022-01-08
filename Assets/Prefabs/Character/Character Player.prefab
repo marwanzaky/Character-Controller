@@ -558,21 +558,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1507114064461563014}
+  movementAnimatorOverrideController: {fileID: 22100000, guid: 0f9433a1b7ffd4424bd43a694d284568, type: 2}
   healthBar: {fileID: 8129983753176788254}
   ragdoll: {fileID: 3077322648291940803}
   walkSpeed: 3
   runSpeed: 10
   behavoirs:
   - name: Movement
-    controller: {fileID: 22100000, guid: 0f9433a1b7ffd4424bd43a694d284568, type: 2}
+    upperbodyIdleClip: {fileID: 0}
+    attackClip: {fileID: 0}
     weapon: {fileID: 0}
     attackAudio: Push
   - name: Sword
-    controller: {fileID: 22100000, guid: 56a9a7b0e50794bd2988b847808cbf05, type: 2}
+    upperbodyIdleClip: {fileID: 0}
+    attackClip: {fileID: -203655887218126122, guid: cffab63eed25542ea92a1b00b76fc407, type: 3}
     weapon: {fileID: 5896057935469446516}
     attackAudio: Attack
   - name: Gun
-    controller: {fileID: 22100000, guid: 0e6ad003c1b924845bb8c0969d7947f0, type: 2}
+    upperbodyIdleClip: {fileID: -203655887218126122, guid: ac0ecdaf41ab64041926bff19c08c5af, type: 3}
+    attackClip: {fileID: -203655887218126122, guid: f0900406329b54ee2aa3756288f841ec, type: 3}
     weapon: {fileID: 4174888319415848871}
     attackAudio: Fire
   controller: {fileID: 8887359875736762428}
@@ -585,5 +589,5 @@ MonoBehaviour:
   rig: {fileID: 5215018732605272781}
   jumpHeight: 5
   gravityScale: 2
-  smoothMoveTime: 0.2
+  smoothMoveTime: 0.1
   enableGUI: 0

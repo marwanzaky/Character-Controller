@@ -7,22 +7,17 @@ namespace MarwanZaky
 {
     public class Enemy : Character
     {
-        const float IN_COMA_DELAY = .3f;
-        const float NEXT_ATTACK_DELAY = 1f;
-
-        float inComaTimer = 0;
+        float nextAttackDelay = 1f;
         float nextAttackTimer = 0;
 
         Vector3 startPos = Vector3.zero;
 
         [Header("Enemy"), SerializeField] NavMeshAgent agent;
-        [SerializeField] Rigidbody _rigidbody;
         [SerializeField] Collider col;
-        [SerializeField] string playerTag;
         [SerializeField] float visionRadius;
         [SerializeField] float attackDistance = 2f;
-        [SerializeField] bool addForceOnDamage = true;
-        [SerializeField] LayerMask playerMask;
+        [SerializeField] string targetTag;
+        [SerializeField] LayerMask targetMask;
 
         protected override void Start()
         {
@@ -43,72 +38,45 @@ namespace MarwanZaky
             if (nextAttackTimer > 0)
                 nextAttackTimer -= Time.deltaTime;
 
-            if (inComaTimer > 0)
-            {
-                inComaTimer -= Time.deltaTime;
-                return;
-            }
-
-            InComa();
-
             FollowTarget();
 
             Animator_MoveY = agent.velocity.magnitude > 0 ? 1f : 0f;
         }
 
-        public override void Damage(float damage, Vector3 hitPoint)
-        {
-            base.Damage(damage, hitPoint);
-
-            if (addForceOnDamage)
-            {
-                const float HIT_FORCE = 500f;
-                var hitDir = Vector3X.IgnoreY((transform.position - hitPoint).normalized);
-
-                inComaTimer = IN_COMA_DELAY;
-                InComa();   // update
-
-                _rigidbody.AddForce(hitDir * HIT_FORCE);
-            }
-        }
-
         protected override void Attack()
         {
-            agent.velocity = Vector3.zero;
-
             if (nextAttackTimer > 0) { return; }
 
-            nextAttackTimer = AttackLength + NEXT_ATTACK_DELAY;
+            nextAttackTimer = AttackLength + nextAttackDelay;
+
             base.Attack();
         }
 
         private void FollowTarget()
         {
             var position = Vector3X.IgnoreY(transform.position, col.bounds.min.y);
-            var cols = Physics.OverlapSphere(position, visionRadius, playerMask);
-            var targetCol = cols.FirstOrDefault(el => el.tag == playerTag && el.GetComponent<Character>().IsAlive);
+            var targetCols = Physics.OverlapSphere(position, visionRadius, targetMask);
+            var targetCol = targetCols.FirstOrDefault(el => el.tag == targetTag && el.GetComponent<Character>().IsAlive);
 
             if (targetCol != null)
             {
-                if (Vector3.Distance(transform.position, targetCol.transform.position) > attackDistance && !IsAttack)
-                    agent.SetDestination(targetCol.transform.position);
-                else Attack();
-            }
-            else agent.SetDestination(startPos);
-        }
+                var dis = Vector3.Distance(transform.position, targetCol.transform.position);
 
-        private void InComa()
-        {
-            if (inComaTimer > 0)
-            {
-                agent.enabled = false;
-                _rigidbody.useGravity = true;
+                if (dis > attackDistance)
+                {
+                    agent.isStopped = false;
+                    agent.SetDestination(targetCol.transform.position);
+                }
+                else
+                {
+                    agent.isStopped = true;
+                    Attack();
+                }
             }
             else
             {
-                agent.enabled = true;
-                _rigidbody.useGravity = false;
-                _rigidbody.velocity = Vector3.zero;
+                agent.isStopped = false;
+                agent.SetDestination(startPos);
             }
         }
 
@@ -118,6 +86,7 @@ namespace MarwanZaky
 
             agent.velocity = Vector3.zero;
             agent.enabled = false;
+
             Destroy(gameObject, 10f);
         }
 

@@ -29,6 +29,7 @@ namespace MarwanZaky
 
         private void Attack()
         {
+            StopAllCoroutines();
             StartCoroutine(AttackIE());
         }
 

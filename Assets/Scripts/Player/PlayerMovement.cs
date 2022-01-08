@@ -46,10 +46,10 @@ namespace MarwanZaky
         [SerializeField] LayerMask groundMask;
         [SerializeField] Transform aimHead;
         [SerializeField] Rig rig;
+        [SerializeField] bool enableGUI = false;
         [SerializeField] float jumpHeight = 8f;
         [SerializeField] float gravityScale = 1f;
         [SerializeField] float smoothMoveTime = .2f;
-        [SerializeField] bool enableGUI = false;
 
         public Vector3 SmoothMove => smoothMove;
         public Vector3 _Input { get; private set; }
@@ -123,13 +123,13 @@ namespace MarwanZaky
 
             // Switch controllers.
             if (Input.GetKeyDown(KeyCode.Alpha1))
-                OnCurrentControllerChange?.Invoke(0);
+                this.OnCurrentControllerChange?.Invoke(0);
 
             else if (Input.GetKeyDown(KeyCode.Alpha2))
                 OnCurrentControllerChange?.Invoke(1);
 
             else if (Input.GetKeyDown(KeyCode.Alpha3))
-                OnCurrentControllerChange?.Invoke(2);
+                this.OnCurrentControllerChange?.Invoke(2);
         }
 
         protected override void Alive()
@@ -144,7 +144,7 @@ namespace MarwanZaky
 
             Inputs();
 
-            if ((isGrounded || moveAir == MoveAir.Moveable) && !IsAttack)
+            if (isGrounded || moveAir == MoveAir.Moveable)
                 Movement();
 
             AimHead();
@@ -222,7 +222,7 @@ namespace MarwanZaky
             const float MIN_VECTOR_AIM_MEAD = 1.5f;
 
             var rigWeight = 0;
-            var mouseHit = RaycastHitX.MouseHit(groundMask);
+            var mouseHit = RaycastHitX.MouseHit(groundMask, debug: DEBUG);
 
             if (mouseHit.hit.collider == null) { return; }
 
@@ -230,9 +230,12 @@ namespace MarwanZaky
             var mouseHitVector = mouseHit.ray.direction.normalized; mouseHitVector.y = 0; mouseHitVector = mouseHitVector.normalized;
             var totalVector = (playerVector + mouseHitVector);
 
-            Debug.DrawRay(transform.position, playerVector);
-            Debug.DrawRay(transform.position, mouseHitVector, Color.yellow);
-            Debug.DrawRay(transform.position, totalVector, Color.green);
+            if (DEBUG)
+            {
+                Debug.DrawRay(transform.position, playerVector);
+                Debug.DrawRay(transform.position, mouseHitVector, Color.yellow);
+                Debug.DrawRay(transform.position, totalVector, Color.green);
+            }
 
             if (totalVector.magnitude > MIN_VECTOR_AIM_MEAD)
             {
