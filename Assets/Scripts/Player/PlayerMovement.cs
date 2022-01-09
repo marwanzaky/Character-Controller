@@ -1,7 +1,6 @@
 using UnityEngine;
 using MarwanZaky.Methods;
 using MarwanZaky.Audio;
-using UnityEngine.Animations.Rigging;
 
 namespace MarwanZaky
 {
@@ -38,8 +37,6 @@ namespace MarwanZaky
         [Header("Player"), SerializeField] protected CharacterController controller;
         [SerializeField] CursorLockMode cursorLockMode = CursorLockMode.None;
         [SerializeField] MoveAir moveAir = MoveAir.Moveable;
-        [SerializeField] Transform aimHead;
-        [SerializeField] Rig rig;
         [SerializeField] bool enableGUI = false;
         [SerializeField] float jumpHeight = 8f;
         [SerializeField] float gravityScale = 1f;
@@ -136,7 +133,7 @@ namespace MarwanZaky
             if (isGrounded || moveAir == MoveAir.Moveable)
                 Movement();
 
-            AimHead();
+            Rig();
 
             controller.Move(velocity * Time.deltaTime);
         }
@@ -204,7 +201,7 @@ namespace MarwanZaky
             transform.rotation = smoothTime ? Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime) : targetRot;
         }
 
-        private void AimHead()
+        private void Rig()
         {
             const float SMOOTH_TIME = .1f;
             const float MIN_VECTOR_AIM_MEAD = 1.5f;
@@ -228,7 +225,7 @@ namespace MarwanZaky
                 if (totalVector.magnitude > MIN_VECTOR_AIM_MEAD)
                 {
                     weight = 1;
-                    aimHead.position = mouseHit.hit.point;
+                    rigTarget.position = mouseHit.hit.point;
                 }
             }
 

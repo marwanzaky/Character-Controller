@@ -1,9 +1,7 @@
 using UnityEngine;
 using MarwanZaky.Audio;
-using MarwanZaky.Methods;
-using System.Collections.Generic;
+using UnityEngine.Animations.Rigging;
 using System;
-using System.Linq;
 
 namespace MarwanZaky
 {
@@ -12,10 +10,17 @@ namespace MarwanZaky
         [System.Serializable]
         public struct Behavoir
         {
+            [Header("Properties")]
             public string name;
             public AnimatorOverrideController controller;
             public GameObject weapon;
             public string attackAudio;
+
+            [Header("Rig Weight")]
+            [Range(0f, 1f)] public float rigChestAimWeight;
+            [Range(0f, 1f)] public float rigHandRightAimWeight;
+            [Range(0f, 1f)] public float rigHandLeftAimWeight;
+            [Range(0f, 1f)] public float rigHeadAimWeight;
         }
 
         protected const bool DEBUG = true;
@@ -26,7 +31,7 @@ namespace MarwanZaky
         protected bool isGrounded = false;
         protected bool wasGrounded = false;
 
-        [Header("Character"), SerializeField] protected Animator animator;
+        [Header("Character Properties"), SerializeField] protected Animator animator;
         [SerializeField] protected Collider col;
         [SerializeField] protected HealthBar healthBar;
         [SerializeField] protected Ragdoll ragdoll;
@@ -34,6 +39,13 @@ namespace MarwanZaky
         [SerializeField] protected float walkSpeed = 3f;
         [SerializeField] protected float runSpeed = 10f;
         [SerializeField] protected Behavoir[] behavoirs;
+
+        [Header("Character Rig"), SerializeField] protected Rig rig;
+        [SerializeField] protected MultiAimConstraint rigChestAim;
+        [SerializeField] protected MultiAimConstraint rigHandRightAim;
+        [SerializeField] protected TwoBoneIKConstraint rigHandLeftAim;
+        [SerializeField] protected MultiAimConstraint rigHeadAim;
+        [SerializeField] protected Transform rigTarget;
 
         public Action OnAttack { get; set; }
         public Action<int> OnCurrentControllerChange { get; set; }
@@ -158,6 +170,11 @@ namespace MarwanZaky
         protected void UpdateCurrentBehavoir(int currentBehavoir)
         {
             animator.runtimeAnimatorController = behavoirs[currentBehavoir].controller;
+
+            rigChestAim.weight = behavoirs[currentBehavoir].rigChestAimWeight;
+            rigHandRightAim.weight = behavoirs[currentBehavoir].rigHandRightAimWeight;
+            rigHandLeftAim.weight = behavoirs[currentBehavoir].rigHandLeftAimWeight;
+            rigHeadAim.weight = behavoirs[currentBehavoir].rigHeadAimWeight;
 
             for (int i = 0; i < behavoirs.Length; i++)
                 if (behavoirs[i].weapon)

@@ -40,6 +40,6 @@ MonoBehaviour:
   - name: Explode
     onStart: 0
     clip: {fileID: 8300000, guid: 8c0628945efae4de9ac3efd8c7dfb4dd, type: 3}
-    volume: 0.5
+    volume: 1
     pitchType: 2
     loop: 0
