@@ -26,9 +26,6 @@ namespace MarwanZaky
 
         const float GRAVITY = -9.81f;
 
-        bool isGrounded = false;
-        bool wasGrounded = false;
-
         Transform cam;
 
         Vector3 velocity;
@@ -38,12 +35,9 @@ namespace MarwanZaky
         float smoothAnimValVelX;    // smooth animation value velocity x-axis
         float smoothAnimValVelY;    // smooth animation value velcoity y-axis
 
-        Collider col;
-
         [Header("Player"), SerializeField] protected CharacterController controller;
         [SerializeField] CursorLockMode cursorLockMode = CursorLockMode.None;
         [SerializeField] MoveAir moveAir = MoveAir.Moveable;
-        [SerializeField] LayerMask groundMask;
         [SerializeField] Transform aimHead;
         [SerializeField] Rig rig;
         [SerializeField] bool enableGUI = false;
@@ -54,6 +48,8 @@ namespace MarwanZaky
         public Vector3 SmoothMove => smoothMove;
         public Vector3 _Input { get; private set; }
 
+        public override float Radius => controller.radius;
+        public override float AttackLength => 1;
         public float Speed => IsRunning ? runSpeed : walkSpeed;
 
         public bool IsRunning { get; set; }
@@ -99,14 +95,7 @@ namespace MarwanZaky
             Cursor.lockState = cursorLockMode;
             cam = Camera.main.transform;
 
-            col = controller.GetComponent<Collider>();
-
             base.Start();
-        }
-
-        protected override void Update()
-        {
-            base.Update();
         }
 
         private void Inputs()
@@ -181,18 +170,17 @@ namespace MarwanZaky
             controller.Move(smoothMove * Time.deltaTime);
         }
 
-        private void IsGrounded()
+        protected override void IsGrounded()
         {
-            isGrounded = IsGroundedSphere(col, controller.radius, groundMask, true);
+            base.IsGrounded();
 
             if (isGrounded && velocity.y < 0)
                 velocity.y = -5f;
+        }
 
-            if (isGrounded && !wasGrounded) // on land
-                AudioManager.Instance.Play("Land");
-
-            wasGrounded = isGrounded;
-            animator.SetBool("Float", !isGrounded);
+        protected override void OnGrounded()
+        {
+            AudioManager.Instance.Play("Land");
         }
 
         private void Gravity()
@@ -221,7 +209,7 @@ namespace MarwanZaky
             const float SMOOTH_TIME = .1f;
             const float MIN_VECTOR_AIM_MEAD = 1.5f;
 
-            var rigWeight = 0;
+            var weight = 0;
             var mouseHit = RaycastHitX.MouseHit(groundMask, debug: DEBUG);
 
             if (mouseHit.hit.collider == null) { return; }
@@ -239,11 +227,11 @@ namespace MarwanZaky
 
             if (totalVector.magnitude > MIN_VECTOR_AIM_MEAD)
             {
-                rigWeight = 1;
+                weight = 1;
                 aimHead.position = mouseHit.hit.point;
             }
 
-            rig.weight = Mathf.Lerp(rig.weight, rigWeight, SMOOTH_TIME);
+            rig.weight = Mathf.Lerp(rig.weight, weight, SMOOTH_TIME);
         }
 
         private void OnTriggerEnter(Collider col)

@@ -558,8 +558,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1507114064461563014}
+  col: {fileID: 8887359875736762428}
   healthBar: {fileID: 8129983753176788254}
   ragdoll: {fileID: 3077322648291940803}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 576
   walkSpeed: 3
   runSpeed: 10
   behavoirs:
@@ -578,9 +582,6 @@ MonoBehaviour:
   controller: {fileID: 8887359875736762428}
   cursorLockMode: 1
   moveAir: 0
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 576
   aimHead: {fileID: 7839900138313358599}
   rig: {fileID: 5215018732605272781}
   enableGUI: 0

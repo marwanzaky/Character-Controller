@@ -495,8 +495,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 168825648030929950}
+  col: {fileID: 2038542387019381577}
   healthBar: {fileID: 7380858210496642438}
   ragdoll: {fileID: 4326071299191687515}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 576
   walkSpeed: 3
   runSpeed: 10
   behavoirs:
@@ -513,7 +517,6 @@ MonoBehaviour:
     weapon: {fileID: 3408587782813409087}
     attackAudio: Fire
   agent: {fileID: 4938000115061997318}
-  col: {fileID: 2038542387019381577}
   visionRadius: 15
   attackDistance: 1.75
   targetTag: Character/Player

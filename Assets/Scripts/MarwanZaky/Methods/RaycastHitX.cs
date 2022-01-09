@@ -14,7 +14,6 @@ namespace MarwanZaky
 
                 Physics.Raycast(ray.origin, ray.direction, out hit, maxDistance, layerMask);
 
-
                 if (debug)
                 {
                     Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);

@@ -23,22 +23,28 @@ namespace MarwanZaky
         protected int currentBehavoir = 0;
         protected int defaultBehavoir = 0;
 
+        protected bool isGrounded = false;
+        protected bool wasGrounded = false;
+
         [Header("Character"), SerializeField] protected Animator animator;
-        [SerializeField] private HealthBar healthBar;
-        [SerializeField] Ragdoll ragdoll;
+        [SerializeField] protected Collider col;
+        [SerializeField] protected HealthBar healthBar;
+        [SerializeField] protected Ragdoll ragdoll;
+        [SerializeField] protected LayerMask groundMask;
         [SerializeField] protected float walkSpeed = 3f;
         [SerializeField] protected float runSpeed = 10f;
         [SerializeField] protected Behavoir[] behavoirs;
+
+        public Action OnAttack { get; set; }
+        public Action<int> OnCurrentControllerChange { get; set; }
 
         public int DefaultBehavoir => defaultBehavoir;
 
         public bool IsAlive { get; set; }
         public bool IsAttack => animator.GetCurrentAnimatorStateInfo(layerIndex: 2).IsName("Attack");
 
-        public Action OnAttack { get; set; }
-        public Action<int> OnCurrentControllerChange { get; set; }
-
-        public float AttackLength => 2.4f;
+        public virtual float Radius { get; set; }
+        public virtual float AttackLength { get; set; }
 
         public float Health
         {
@@ -100,6 +106,22 @@ namespace MarwanZaky
         }
 
         protected virtual void Alive()
+        {
+
+        }
+
+        protected virtual void IsGrounded()
+        {
+            isGrounded = IsGroundedSphere(col, Radius, groundMask, DEBUG);
+
+            if (isGrounded && !wasGrounded)
+                OnGrounded();
+
+            wasGrounded = isGrounded;
+            animator.SetBool("Float", !isGrounded);
+        }
+
+        protected virtual void OnGrounded()
         {
 
         }

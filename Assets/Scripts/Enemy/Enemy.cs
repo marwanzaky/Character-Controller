@@ -7,17 +7,19 @@ namespace MarwanZaky
 {
     public class Enemy : Character
     {
-        float nextAttackDelay = 1f;
+        float nextAttackDelay = 1;
         float nextAttackTimer = 0;
 
         Vector3 startPos = Vector3.zero;
 
         [Header("Enemy"), SerializeField] NavMeshAgent agent;
-        [SerializeField] Collider col;
         [SerializeField] float visionRadius;
         [SerializeField] float attackDistance = 2f;
         [SerializeField] string targetTag;
         [SerializeField] LayerMask targetMask;
+
+        public override float Radius => agent.radius;
+        public override float AttackLength => 1;
 
         protected override void Start()
         {
@@ -28,16 +30,12 @@ namespace MarwanZaky
             base.Start();
         }
 
-        protected override void Update()
-        {
-            base.Update();
-        }
-
         protected override void Alive()
         {
             if (nextAttackTimer > 0)
                 nextAttackTimer -= Time.deltaTime;
 
+            IsGrounded();
             FollowTarget();
 
             Animator_MoveY = agent.velocity.magnitude > 0 ? 1f : 0f;
