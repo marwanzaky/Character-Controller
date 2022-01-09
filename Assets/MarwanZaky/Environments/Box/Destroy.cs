@@ -11,7 +11,7 @@ namespace MarwanZaky
         public void Invoke()
         {
             Instantiate(fractured, transform.position, transform.rotation);
-            AudioManager.Instance.Play(audioClip, transform.position, spatialBlend: 1);
+            AudioManager.Instance.Play(audioClip, transform.position);
             Destroy(gameObject);
         }
     }

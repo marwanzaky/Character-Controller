@@ -30,6 +30,7 @@ namespace MarwanZaky
         private void Awake()
         {
             Singletone();
+
             Application.targetFrameRate = 60;
         }
 
@@ -48,6 +49,13 @@ namespace MarwanZaky
             onStartUnityEvent?.Invoke();
         }
 
+        private void Update()
+        {
+#if UNITY_EDITOR
+            EDITOR_ONLY();
+#endif
+        }
+
         private void GameOver()
         {
             onGameOverUnityEvent?.Invoke();
@@ -56,6 +64,12 @@ namespace MarwanZaky
         public void Restart()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        private void EDITOR_ONLY()
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+                Restart();
         }
     }
 }

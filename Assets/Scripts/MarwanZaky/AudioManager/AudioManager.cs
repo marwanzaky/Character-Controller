@@ -42,7 +42,7 @@ namespace MarwanZaky
                 return Play(name, position: Vector3.zero, spatialBlend: 0);
             }
 
-            public (GameObject gameObject, AudioClip audioClip) Play(string name, Vector3 position, float spatialBlend)
+            public (GameObject gameObject, AudioClip audioClip) Play(string name, Vector3 position, float spatialBlend = .8f)
             {
                 foreach (var el in data.Datas)
                     if (el.Name == name)

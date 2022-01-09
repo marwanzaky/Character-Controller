@@ -147,7 +147,7 @@ namespace MarwanZaky
         public virtual void Damage(float damage, Vector3 hitPoint)
         {
             Health -= damage;
-            AudioManager.Instance.Play(name: "Hurt", position: transform.position, spatialBlend: 1);
+            AudioManager.Instance.Play(name: "Hurt", transform.position);
         }
 
         #region Behavoir
