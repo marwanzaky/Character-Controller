@@ -212,23 +212,24 @@ namespace MarwanZaky
             var weight = 0;
             var mouseHit = RaycastHitX.MouseHit(groundMask, debug: DEBUG);
 
-            if (mouseHit.hit.collider == null) { return; }
-
-            var playerVector = transform.forward;
-            var mouseHitVector = mouseHit.ray.direction.normalized; mouseHitVector.y = 0; mouseHitVector = mouseHitVector.normalized;
-            var totalVector = (playerVector + mouseHitVector);
-
-            if (DEBUG)
+            if (mouseHit.hit.collider && !IsAttack)
             {
-                Debug.DrawRay(transform.position, playerVector);
-                Debug.DrawRay(transform.position, mouseHitVector, Color.yellow);
-                Debug.DrawRay(transform.position, totalVector, Color.green);
-            }
+                var playerVector = transform.forward;
+                var mouseHitVector = mouseHit.ray.direction.normalized; mouseHitVector.y = 0; mouseHitVector = mouseHitVector.normalized;
+                var totalVector = (playerVector + mouseHitVector);
 
-            if (totalVector.magnitude > MIN_VECTOR_AIM_MEAD)
-            {
-                weight = 1;
-                aimHead.position = mouseHit.hit.point;
+                if (DEBUG)
+                {
+                    Debug.DrawRay(transform.position, playerVector);
+                    Debug.DrawRay(transform.position, mouseHitVector, Color.yellow);
+                    Debug.DrawRay(transform.position, totalVector, Color.green);
+                }
+
+                if (totalVector.magnitude > MIN_VECTOR_AIM_MEAD)
+                {
+                    weight = 1;
+                    aimHead.position = mouseHit.hit.point;
+                }
             }
 
             rig.weight = Mathf.Lerp(rig.weight, weight, SMOOTH_TIME);

@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 2a7a30b1254fc461e905bee51ea1cc17, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 00e19327260ea4130b7b2edc827ba6f2, type: 2}
 --- !u!43 &14357573
 Mesh:
   m_ObjectHideFlags: 0
@@ -879,8 +879,8 @@ Transform:
   - {fileID: 722346844}
   - {fileID: 1024200410722839329}
   - {fileID: 1211402614}
-  - {fileID: 316536930}
   - {fileID: 874727157}
+  - {fileID: 316536930}
   - {fileID: 1543405518}
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -2163,7 +2163,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 512046102}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &874727158
 MeshCollider:
@@ -2694,7 +2694,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-40200
+  m_Name: pb_Mesh33790
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4150,7 +4150,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6228362000510150471, guid: e7c743fbb295e4d15965aa2cff680980, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6228362000510150471, guid: e7c743fbb295e4d15965aa2cff680980, type: 3}
       propertyPath: m_LocalPosition.x
