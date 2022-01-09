@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 3
-  speed: 100
+  speed: 150
   destroyPrefab: {fileID: 6666361919546285360, guid: e1bda493e5280496c98264ba42f1361c, type: 3}
   targetTag: Character/Enemy
   layerMask:
@@ -139,20 +139,20 @@ TrailRenderer:
         time: 0
         value: 1
         inSlope: 0
-        outSlope: -0.8
-        tangentMode: 69
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
         value: 0.2
-        inSlope: -0.8
-        outSlope: 0
-        tangentMode: 69
+        inSlope: -2.213272
+        outSlope: -2.213272
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+        inWeight: 0.15804428
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
