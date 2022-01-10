@@ -8,6 +8,7 @@ namespace MarwanZaky
         Transform cam;
 
         [SerializeField] Vector3 offset;
+        [SerializeField] bool onLateUpdate;
         [SerializeField] bool freezeX, freezeY, freezeZ;
 
         private void Awake()
@@ -16,6 +17,11 @@ namespace MarwanZaky
         }
 
         private void LateUpdate()
+        {
+            Refresh();
+        }
+
+        private void Refresh()
         {
             transform.rotation = CameraDirection() * Quaternion.Euler(offset);
         }

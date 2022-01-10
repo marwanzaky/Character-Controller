@@ -199,6 +199,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3053378079068533391, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
+      propertyPath: on
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3080984769997952539, guid: 92c1a6f1611e842f19209af89755881b, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -610,6 +614,7 @@ MonoBehaviour:
     m_Bits: 576
   walkSpeed: 3
   runSpeed: 10
+  smoothMoveTime: 0.1
   behavoirs:
   - name: Movement
     controller: {fileID: 22100000, guid: 0f9433a1b7ffd4424bd43a694d284568, type: 2}
@@ -647,4 +652,3 @@ MonoBehaviour:
   enableGUI: 0
   jumpHeight: 5
   gravityScale: 2
-  smoothMoveTime: 0.1
