@@ -551,7 +551,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   walkSpeed: 3
-  runSpeed: 10
+  runSpeed: 7
+  smoothMoveTime: 0.1
   behavoirs:
   - name: Movement
     controller: {fileID: 22100000, guid: 0f9433a1b7ffd4424bd43a694d284568, type: 2}
@@ -586,6 +587,7 @@ MonoBehaviour:
   agent: {fileID: 4938000115061997318}
   visionRadius: 15
   attackDistance: 1.75
+  walkDistance: 4
   targetTag: Character/Player
   targetMask:
     serializedVersion: 2
@@ -601,9 +603,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 10
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 720
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

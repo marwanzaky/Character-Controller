@@ -8,8 +8,13 @@ namespace MarwanZaky
         {
             public static (RaycastHit hit, Ray ray) MouseHit(LayerMask layerMask, float maxDistance = 1000f, bool debug = false)
             {
+                return MouseHit(Camera.main, layerMask, maxDistance, debug);
+            }
+
+            public static (RaycastHit hit, Ray ray) MouseHit(Camera cam, LayerMask layerMask, float maxDistance = 1000f, bool debug = false)
+            {
                 var mousePos = new Vector2((float)Screen.width / 2f, (float)Screen.height / 2f);
-                var ray = Camera.main.ScreenPointToRay(mousePos);
+                var ray = cam.ScreenPointToRay(mousePos);
                 var hit = new RaycastHit();
 
                 Physics.Raycast(ray.origin, ray.direction, out hit, maxDistance, layerMask);

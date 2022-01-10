@@ -31,6 +31,9 @@ namespace MarwanZaky
         protected bool isGrounded = false;
         protected bool wasGrounded = false;
 
+        protected float smoothAnimValVelX;    // smooth animation value velocity x-axis
+        protected float smoothAnimValVelY;    // smooth animation value velcoity y-axis
+
         [Header("Character Properties"), SerializeField] protected Animator animator;
         [SerializeField] protected Collider col;
         [SerializeField] protected HealthBar healthBar;
@@ -38,6 +41,7 @@ namespace MarwanZaky
         [SerializeField] protected LayerMask groundMask;
         [SerializeField] protected float walkSpeed = 3f;
         [SerializeField] protected float runSpeed = 10f;
+        [SerializeField] protected float smoothMoveTime = .2f;
         [SerializeField] protected Behavoir[] behavoirs;
 
         [Header("Character Rig"), SerializeField] protected Rig rig;
@@ -50,10 +54,16 @@ namespace MarwanZaky
         public Action OnAttack { get; set; }
         public Action<int> OnCurrentControllerChange { get; set; }
 
+        public virtual Vector3 Move { get; set; }
+
         public int DefaultBehavoir => defaultBehavoir;
+
+        public virtual bool IsRunning { get; set; }
 
         public bool IsAlive { get; set; }
         public bool IsAttack => animator.GetCurrentAnimatorStateInfo(layerIndex: 2).IsName("Attack");
+
+        public float Speed => IsRunning ? runSpeed : walkSpeed;
 
         public virtual float Radius { get; set; }
         public virtual float AttackLength { get; set; }
@@ -122,6 +132,12 @@ namespace MarwanZaky
 
         }
 
+        protected virtual void Movement()
+        {
+            Animator_MoveX = GetAnimMoveVal(Move.x, Animator_MoveX, ref smoothAnimValVelX);
+            Animator_MoveY = GetAnimMoveVal(Move.y, Animator_MoveY, ref smoothAnimValVelY);
+        }
+
         protected virtual void IsGrounded()
         {
             isGrounded = IsGroundedSphere(col, Radius, groundMask, DEBUG);
@@ -183,5 +199,13 @@ namespace MarwanZaky
 
         #endregion
 
+        float GetAnimMoveVal(float move, float currentVal, ref float smoothVal)
+        {
+            const float WALK_VAL = 1f;
+            const float RUN_VAL = 2f;
+
+            var targetVal = move * (IsRunning ? RUN_VAL : WALK_VAL);
+            return Mathf.SmoothDamp(currentVal, targetVal, ref smoothVal, smoothMoveTime);
+        }
     }
 }

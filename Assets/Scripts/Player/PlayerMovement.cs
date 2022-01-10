@@ -25,14 +25,11 @@ namespace MarwanZaky
 
         const float GRAVITY = -9.81f;
 
-        Transform cam;
+        Camera cam;
 
         Vector3 velocity;
         Vector3 smoothMove;
         Vector3 smoothMoveVel;
-
-        float smoothAnimValVelX;    // smooth animation value velocity x-axis
-        float smoothAnimValVelY;    // smooth animation value velcoity y-axis
 
         [Header("Player"), SerializeField] protected CharacterController controller;
         [SerializeField] CursorLockMode cursorLockMode = CursorLockMode.None;
@@ -40,16 +37,12 @@ namespace MarwanZaky
         [SerializeField] bool enableGUI = false;
         [SerializeField] float jumpHeight = 8f;
         [SerializeField] float gravityScale = 1f;
-        [SerializeField] float smoothMoveTime = .2f;
 
+        public override Vector3 Move => controlls.Player.Movement.ReadValue<Vector2>();
         public Vector3 SmoothMove => smoothMove;
-        public Vector3 _Input { get; private set; }
 
         public override float Radius => controller.radius;
         public override float AttackLength => 1;
-        public float Speed => IsRunning ? runSpeed : walkSpeed;
-
-        public bool IsRunning { get; set; }
 
         private void Awake()
         {
@@ -90,7 +83,7 @@ namespace MarwanZaky
         protected override void Start()
         {
             Cursor.lockState = cursorLockMode;
-            cam = Camera.main.transform;
+            cam = Camera.main;
 
             base.Start();
         }
@@ -120,12 +113,10 @@ namespace MarwanZaky
 
         protected override void Alive()
         {
-            _Input = controlls.Player.Movement.ReadValue<Vector2>();
-
             IsGrounded();
             Gravity();
 
-            if (_Input.magnitude > 0 && !IsAttack)
+            if (Move.magnitude > 0 && !IsAttack)
                 LookAtCamera();
 
             Inputs();
@@ -142,7 +133,7 @@ namespace MarwanZaky
         {
             if (IsAttack) { return; }
 
-            LookAtCamera(smoothTime: false);
+            // LookAtCamera(smoothTime: false);
 
             base.Attack();
         }
@@ -155,16 +146,15 @@ namespace MarwanZaky
             base.OnDie();
         }
 
-        private void Movement()
+        protected override void Movement()
         {
-            var move = (transform.right * _Input.x + transform.forward * _Input.y).normalized;
+            var move = (transform.right * Move.x + transform.forward * Move.y).normalized;
 
             smoothMove = Vector3.SmoothDamp(smoothMove, move * Speed, ref smoothMoveVel, smoothMoveTime);
 
-            Animator_MoveX = GetAnimMoveVal(_Input.x, Animator_MoveX, ref smoothAnimValVelX);
-            Animator_MoveY = GetAnimMoveVal(_Input.y, Animator_MoveY, ref smoothAnimValVelY);
-
             controller.Move(smoothMove * Time.deltaTime);
+
+            base.Movement();
         }
 
         protected override void IsGrounded()
@@ -195,7 +185,7 @@ namespace MarwanZaky
         {
             const float SMOOTH_TIME = 5f;
 
-            var camAngles = Vector3X.IgnoreXZ(cam.eulerAngles);
+            var camAngles = Vector3X.IgnoreXZ(cam.transform.eulerAngles);
             var targetRot = Quaternion.Euler(camAngles);
 
             transform.rotation = smoothTime ? Quaternion.Slerp(transform.rotation, targetRot, SMOOTH_TIME * Time.deltaTime) : targetRot;
@@ -204,31 +194,31 @@ namespace MarwanZaky
         private void Rig()
         {
             const float SMOOTH_TIME = .1f;
-            const float MIN_VECTOR_AIM_MEAD = 1.5f;
+            const float MIN_VECTOR_AIM_MEAD = 1f;
 
-            var weight = 0;
-            var mouseHit = RaycastHitX.MouseHit(groundMask, debug: DEBUG);
+            var weight = 0f;
+            var mouseHit = RaycastHitX.MouseHit(cam, groundMask, debug: DEBUG);
+            var targetPos = mouseHit.ray.direction * 1000f;     // default
 
-            if (mouseHit.hit.collider && !IsAttack)
+            var playerVector = transform.forward;
+            var mouseHitVector = mouseHit.ray.direction.normalized; mouseHitVector.y = 0; mouseHitVector = mouseHitVector.normalized;
+            var totalVector = (playerVector + mouseHitVector);
+
+            if (DEBUG)
             {
-                var playerVector = transform.forward;
-                var mouseHitVector = mouseHit.ray.direction.normalized; mouseHitVector.y = 0; mouseHitVector = mouseHitVector.normalized;
-                var totalVector = (playerVector + mouseHitVector);
-
-                if (DEBUG)
-                {
-                    Debug.DrawRay(transform.position, playerVector);
-                    Debug.DrawRay(transform.position, mouseHitVector, Color.yellow);
-                    Debug.DrawRay(transform.position, totalVector, Color.green);
-                }
-
-                if (totalVector.magnitude > MIN_VECTOR_AIM_MEAD)
-                {
-                    weight = 1;
-                    rigTarget.position = mouseHit.hit.point;
-                }
+                Debug.DrawRay(transform.position, playerVector);
+                Debug.DrawRay(transform.position, mouseHitVector, Color.yellow);
+                Debug.DrawRay(transform.position, totalVector, Color.green);
             }
 
+            if (totalVector.magnitude > MIN_VECTOR_AIM_MEAD)
+            {
+                weight = 1f;
+                targetPos = mouseHit.hit.collider ? mouseHit.hit.point : targetPos;
+            }
+            else weight = 0f;
+
+            rigTarget.position = targetPos;
             rig.weight = Mathf.Lerp(rig.weight, weight, SMOOTH_TIME);
         }
 
@@ -266,14 +256,5 @@ namespace MarwanZaky
         }
 
         #endregion
-
-        float GetAnimMoveVal(float input, float currentVal, ref float smoothVal)
-        {
-            const float WALK_VAL = 1f;
-            const float RUN_VAL = 2f;
-
-            var targetVal = input * (IsRunning ? RUN_VAL : WALK_VAL);
-            return Mathf.SmoothDamp(currentVal, targetVal, ref smoothVal, smoothMoveTime);
-        }
     }
 }

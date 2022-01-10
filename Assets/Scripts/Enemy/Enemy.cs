@@ -7,6 +7,8 @@ namespace MarwanZaky
 {
     public class Enemy : Character
     {
+        float targetDis;
+
         float nextAttackDelay = 1;
         float nextAttackTimer = 0;
 
@@ -15,17 +17,21 @@ namespace MarwanZaky
         [Header("Enemy"), SerializeField] NavMeshAgent agent;
         [SerializeField] float visionRadius;
         [SerializeField] float attackDistance = 2f;
+        [SerializeField] float walkDistance = 5f;
         [SerializeField] string targetTag;
         [SerializeField] LayerMask targetMask;
 
+        public override bool IsRunning => targetDis > walkDistance ? targetDis != Mathf.Infinity : false;   // if the target distance equals to infinity it means the target is out of his vision
+
         public override float Radius => agent.radius;
         public override float AttackLength => 1;
+
+        public override Vector3 Move => agent.velocity.magnitude > 0f ? Vector3.up * (IsRunning ? 2f : 1f) : Vector3.zero;
 
         protected override void Start()
         {
             defaultBehavoir = 1;
             startPos = transform.position;
-            agent.speed = walkSpeed;
 
             base.Start();
         }
@@ -36,9 +42,9 @@ namespace MarwanZaky
                 nextAttackTimer -= Time.deltaTime;
 
             IsGrounded();
+            Movement();
             FollowTarget();
 
-            Animator_MoveY = agent.velocity.magnitude > 0 ? 1f : 0f;
         }
 
         protected override void Attack()
@@ -50,6 +56,13 @@ namespace MarwanZaky
             base.Attack();
         }
 
+        protected override void Movement()
+        {
+            agent.speed = Speed;
+
+            base.Movement();
+        }
+
         private void FollowTarget()
         {
             var position = Vector3X.IgnoreY(transform.position, col.bounds.min.y);
@@ -58,9 +71,9 @@ namespace MarwanZaky
 
             if (targetCol != null)
             {
-                var dis = Vector3.Distance(transform.position, targetCol.transform.position);
+                targetDis = Vector3.Distance(transform.position, targetCol.transform.position);
 
-                if (dis > attackDistance)
+                if (targetDis > attackDistance)
                 {
                     agent.isStopped = false;
                     agent.SetDestination(targetCol.transform.position);
@@ -73,6 +86,7 @@ namespace MarwanZaky
             }
             else
             {
+                targetDis = Mathf.Infinity;
                 agent.isStopped = false;
                 agent.SetDestination(startPos);
             }
