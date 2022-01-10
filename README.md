@@ -10,3 +10,5 @@ Character-Controller is a starter asset tool for a 3d person shooter game.
 3. Animator Override Controller Template
 4. Enemy AI
 5. Ragdoll System
+
+<img width="535" alt="Screen Shot 2022-01-10 at 02 08 50" src="https://user-images.githubusercontent.com/64248203/148708677-5be59827-20a6-47e9-ab49-e59f39a8eb5c.png">
